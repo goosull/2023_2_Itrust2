@@ -1,9 +1,24 @@
-# 난쏘공
-## 팀원
+# 난쏘공 (Team 5)
 
-## 정기 회의
-### 시간
-매주 토요일 오후 10시
+## Members
 
-### 회의록
-[1004 회의록](https://34.64.100.199/nanssogong/itrust2/-/blob/main/%ED%9A%8C%EC%9D%98%EB%A1%9D/%ED%9A%8C%EC%9D%98%EB%A1%9D(1)_1014.md?ref_type=heads)
+| Student ID | Name   | GitLab Username |
+| ---------- | ------ | --------------- |
+| 2022148004 | 이협   | dlguq0107       |
+| 2018122053 | 노우준 | 2018122053      |
+| 2022148047 | 최우현 | starwh          |
+| 2021147562 | 김이주 | 2021147562      |
+| 2022148082 | 김승원 | goosull         |
+| 2018122018 | 박태주 | taejoo          |
+| 2021123062 | 유광수 | YuKwangsu       |
+| 2021182012 | 손예원 | SonYewon        |
+| 2018122021 | 최병준 | ByungJune       |
+
+## Regular Meeting
+
+10 p.m. every Saturday
+
+### Minutes
+
+- [10.14](docs/minutes/minutes_1014.md)
+- [10.21](docs/minutes/minutes_1021.md)
