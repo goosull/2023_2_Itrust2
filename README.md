@@ -22,3 +22,12 @@
 
 - [10.14](docs/minutes/minutes_1014.md)
 - [10.21](docs/minutes/minutes_1021.md)
+
+## Use Cases
+
+- [UC15](docs/use-cases/UC15.md)
+- [UC16](docs/use-cases/UC16.md)
+- [UC20](docs/use-cases/UC20.md)
+- [UC21](docs/use-cases/UC21.md)
+- [UC22](docs/use-cases/UC22.md)
+- [New UC](docs/use-cases/NEWUC.md)
