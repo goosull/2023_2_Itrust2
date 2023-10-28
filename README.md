@@ -14,6 +14,12 @@
 | 2021182012 | 손예원 | SonYewon        |
 | 2018122021 | 최병준 | ByungJune       |
 
+## Roles
+| Iteration   | Team Leader | Planning Leader | QA Leader |
+| ----------- | ----------- | --------------- | --------- |
+| Iteration 1 | 노우준      | 최우현           | 이협      |
+| Iteration 2 | 유광수      | 김이주           | 박태주    |
+
 ## Regular Meeting
 
 10 p.m. every Saturday
@@ -32,6 +38,9 @@
 - [UC21](docs/use-cases/UC21.md)
 - [UC22](docs/use-cases/UC22.md)
 - [New UC](docs/use-cases/NEWUC.md)
+
+## User Story
+- [User Story](docs/user-story.md)
 
 ## Presentations
 
