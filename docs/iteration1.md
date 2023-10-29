@@ -38,6 +38,7 @@ Billing is an essential part of medical and insurance services.
 
 - An HCP and a patient are registered in the iTrust2 system.
 - An iTrust2 user is logged into the system.
+- The HCP must have begun documenting an office visit.
 
 #### Main Flow
 
