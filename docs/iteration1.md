@@ -43,15 +43,19 @@
 ### UC20
 
 #### user story
+
 - **Patient** wants to be able to request an appointment with an ophthalmologist HCP or a surgical appointment with an ophthalmologist HCP.
 - **Patient** wants to be able to view the status of their reservation requests to manage their reservation requests and be able to delete them.
 - **Ophthalmologist HCP** wants to be able to view appointment requests to manage scheduled care with patients and approve or reject requests.
 - **Ophthalmologist HCP** wants to be able to see approved appointments to know scheduled care and surgery.
+
 #### main flow (간략하게)
+
 - **Patient** enter information and send appointment request
 - **Patient** can view / cancel their request
 - **Ophthalmologist HCP** view request and approve / decline it
-- **Ophthalmologist HCP** view upcomming appointment 
+- **Ophthalmologist HCP** view upcomming appointment
+
 ### UC21
 
 - user story
@@ -59,8 +63,21 @@
 
 ### UC22
 
-- user story
-- main flow (간략하게)
+#### user story
+
+- **Patients, HCPs, and ophthalmologists** want to be able to view documented ophthalmic surgery to verify their practice information.
+- **Ophthalmologist** wants to be able to document ophthalmic surgery treatment to record information about the patient's ophthalmic surgery.
+- **Ophthalmologist** wants to be able to edit the previous ophthalmic surgical treatment information to update the previous treatment information.
+
+#### main flow (간략하게)
+
+- **Patient** can view a documented ophthalmology surgery visit
+- **Ophthalmologist HCP** can view a documented ophthalmology surgery visit
+- **Ophthalmologist HCP** can document an ophthalmology surgery visit
+- **Ophthalmologist HCP** can provides details about the surgery
+- **ophthalmologist** can optionally include basic health metrics when documenting an ophthalmology surgery visit.
+- **ophthalmologist** can edit previously created information about previous ophthalmology surgery visits
+- No other user can edit the visits.
 
 ## Next iteration
 
