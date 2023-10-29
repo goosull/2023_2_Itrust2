@@ -119,6 +119,10 @@ HCP Shelly Vang authenticates into iTrust2. She clicks "View invoices". She is p
 - **Ophthalmologist and optometrist HCP** wants to be able to view or edit the diagnosis of the practice to manage and update the patient's diagnostic information.
 
 #### Main Flow
+1. Patient requests an ophthalmic appointment
+2. Ophthalmologist HCP accepts or rejects appointment
+3. Ophthalmologist or optometrist HCP enters eye health information
+4. After the appointment, ophthalmologist and optometrist HCP can view or edit visit diagnosis
 
 ### UC22
 
