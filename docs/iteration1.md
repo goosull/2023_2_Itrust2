@@ -32,8 +32,16 @@
 
 ### UC15
 
-- user story
-- main flow (간략하게)
+#### User Story
+
+- **HCP** wants to be able to retrieve emergency medical records using the patient's name to access the emergency medical records of a particular patient.
+- **ER** wants to be able to retrieve emergency medical records using username/MID to access emergency medical records for specific patients.
+
+#### Main Flow
+
+Authenticated users search the patient's name for their emergency medical records. 
+
+After that, select the patient from the list and check the record.
 
 ### UC16
 
