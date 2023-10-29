@@ -48,8 +48,10 @@
 - **Ophthalmologist HCP** wants to be able to view appointment requests to manage scheduled care with patients and approve or reject requests.
 - **Ophthalmologist HCP** wants to be able to see approved appointments to know scheduled care and surgery.
 - main flow (간략하게)
-- make / cancel appointment
-- view upcomming appointment
+- **Patient** enter information and send appointment request
+- **Patient** can view / cancel their request
+- **Ophthalmologist HCP** view request and approve / decline it
+- **Ophthalmologist HCP** view upcomming appointment 
 ### UC21
 
 - user story
