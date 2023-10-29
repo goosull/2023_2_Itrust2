@@ -42,12 +42,12 @@
 
 ### UC20
 
-- user story
+#### user story
 - **Patient** wants to be able to request an appointment with an ophthalmologist HCP or a surgical appointment with an ophthalmologist HCP.
 - **Patient** wants to be able to view the status of their reservation requests to manage their reservation requests and be able to delete them.
 - **Ophthalmologist HCP** wants to be able to view appointment requests to manage scheduled care with patients and approve or reject requests.
 - **Ophthalmologist HCP** wants to be able to see approved appointments to know scheduled care and surgery.
-- main flow (간략하게)
+#### main flow (간략하게)
 - **Patient** enter information and send appointment request
 - **Patient** can view / cancel their request
 - **Ophthalmologist HCP** view request and approve / decline it
