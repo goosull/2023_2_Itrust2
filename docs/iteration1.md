@@ -112,8 +112,12 @@ HCP Shelly Vang authenticates into iTrust2. She clicks "View invoices". She is p
 
 ### UC21
 
-- user story
-- main flow (간략하게)
+#### User Story
+
+- **Ophthalmologist and optometrist HCP** wants to be able to enter eye health information to record the patient's eye health status.
+- **Ophthalmologist and optometrist HCP** wants to be able to view or edit the diagnosis of the practice to manage and update the patient's diagnostic information.
+
+#### Main Flow
 
 ### UC22
 
