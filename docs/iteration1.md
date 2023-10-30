@@ -98,13 +98,33 @@ HCP Shelly Vang authenticates into iTrust2. She clicks "View invoices". She is p
 
 ### UC15
 
-- user story
-- main flow (간략하게)
+#### User Story
+
+- **HCP** wants to be able to retrieve emergency medical records using the patient's name to access the emergency medical records of a particular patient.
+- **ER** wants to be able to retrieve emergency medical records using username/MID to access emergency medical records for specific patients.
+
+#### Main Flow
+
+Authenticated users search the patient's name for their emergency medical records. 
+
+After that, select the patient from the list and check the record.
 
 ### UC16
 
-- user story
-- main flow (간략하게)
+#### User Story
+
+- **Patient** wants to be able to see the list of people they have designated as PR and those they have designated as PR to manage and view their PR lists.
+- **Patient** wants to be able to manage other users with their own PR or declare other users as PR or cancel them from PR to remove them from PR.
+- **Patient** wants to be able to see a list of patients designated as PR for a particular patient but to reject that role and to be able to be removed from PR.
+- **HCP** wants to be able to assign PRs to other patients and see a list of those patients' PRs in order to assign and manage a specific patient as a PR for another patient.
+
+#### Main Flow
+
+The patient can see their PR list, declare and un-declare the PR.
+
+PR can see the patient list for which they are PR, and un-declare the PR.
+
+HCP can see the patient's PR list and declare the patient's PR.
 
 ### UC20
 
