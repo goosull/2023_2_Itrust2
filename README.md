@@ -8,7 +8,7 @@
 | 2018122053 | 노우준 | 2018122053      | woojunro@yonsei.ac.kr | FE(ReactJS), BE(NodeJS) |
 | 2022148047 | 최우현 | starwh          | starwh03@yonsei.ac.kr | BE(java)                |
 | 2021147562 | 김이주 | 2021147562      |                       |                         |
-| 2022148082 | 김승원 | goosull         | 2060won@yonsei.ac.kr  | BE(java)                |
+| 2022148082 | 김승원 | goosull         | 2060won@naver.com     | BE(java)                |
 | 2018122018 | 박태주 | taejoo          | qkrxown5985@gmail.com | BE(java)                |
 | 2021123062 | 유광수 | YuKwangsu       | yuokok813813@gmail.com | FE(VanillaJS), BE(java) |
 | 2021182012 | 손예원 | SonYewon        | ssonyewon@yonsei.ac.kr | BE(java)                |
