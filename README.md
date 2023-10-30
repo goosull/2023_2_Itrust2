@@ -12,7 +12,7 @@
 | 2018122018 | 박태주 | taejoo          |                       |                         |
 | 2021123062 | 유광수 | YuKwangsu       | yuokok813813@gmail.com | FE(VanillaJS), BE(java) |
 | 2021182012 | 손예원 | SonYewon        |                       |                         |
-| 2018122021 | 최병준 | ByungJune       |                       |                         |
+| 2018122021 | 최병준 | ByungJune       | bottle6c@yonsei.ac.kr | FE(VueJS), BE(NodeJS)   |
 
 ## Roles
 
