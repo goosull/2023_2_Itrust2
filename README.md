@@ -9,7 +9,7 @@
 | 2022148047 | 최우현 | starwh          |                       |                         |
 | 2021147562 | 김이주 | 2021147562      |                       |                         |
 | 2022148082 | 김승원 | goosull         |                       |                         |
-| 2018122018 | 박태주 | taejoo          |                       |                         |
+| 2018122018 | 박태주 | taejoo          | qkrxown5985@gmail.com | BE(java)                |
 | 2021123062 | 유광수 | YuKwangsu       | yuokok813813@gmail.com | FE(VanillaJS), BE(java) |
 | 2021182012 | 손예원 | SonYewon        |                       |                         |
 | 2018122021 | 최병준 | ByungJune       | bottle6c@yonsei.ac.kr | FE(VueJS), BE(NodeJS)   |
