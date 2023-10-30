@@ -14,6 +14,11 @@
 | 2021182012 | 손예원 | SonYewon        |
 | 2018122021 | 최병준 | ByungJune       |
 
+## Regular Meetings
+
+- 10 p.m. every Saturday
+- Take turns writing minutes
+
 ## Leaders
 
 - Team Leader: 노우준
@@ -105,7 +110,7 @@ HCP Shelly Vang authenticates into iTrust2. She clicks "View invoices". She is p
 
 #### Main Flow
 
-Authenticated users search the patient's name for their emergency medical records. 
+Authenticated users search the patient's name for their emergency medical records.
 
 After that, select the patient from the list and check the record.
 
@@ -128,14 +133,14 @@ HCP can see the patient's PR list and declare the patient's PR.
 
 ### UC20
 
-#### user story
+#### User Story
 
 - **Patient** wants to be able to request an appointment with an ophthalmologist HCP or a surgical appointment with an ophthalmologist HCP.
 - **Patient** wants to be able to view the status of their reservation requests to manage their reservation requests and be able to delete them.
 - **Ophthalmologist HCP** wants to be able to view appointment requests to manage scheduled care with patients and approve or reject requests.
 - **Ophthalmologist HCP** wants to be able to see approved appointments to know scheduled care and surgery.
 
-#### main flow (간략하게)
+#### Main Flow
 
 - **Patient** enter information and send appointment request
 - **Patient** can view / cancel their request
@@ -150,6 +155,7 @@ HCP can see the patient's PR list and declare the patient's PR.
 - **Ophthalmologist and optometrist HCP** wants to be able to view or edit the diagnosis of the practice to manage and update the patient's diagnostic information.
 
 #### Main Flow
+
 1. Patient requests an ophthalmic appointment
 2. Ophthalmologist HCP accepts or rejects appointment
 3. Ophthalmologist or optometrist HCP enters eye health information
@@ -157,13 +163,13 @@ HCP can see the patient's PR list and declare the patient's PR.
 
 ### UC22
 
-#### user story
+#### User Story
 
 - **Patients, HCPs, and ophthalmologists** want to be able to view documented ophthalmic surgery to verify their practice information.
 - **Ophthalmologist** wants to be able to document ophthalmic surgery treatment to record information about the patient's ophthalmic surgery.
 - **Ophthalmologist** wants to be able to edit the previous ophthalmic surgical treatment information to update the previous treatment information.
 
-#### main flow (간략하게)
+#### Main Flow
 
 - **Patient** can view a documented ophthalmology surgery visit
 - **Ophthalmologist HCP** can view a documented ophthalmology surgery visit

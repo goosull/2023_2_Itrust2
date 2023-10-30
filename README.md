@@ -2,23 +2,24 @@
 
 ## Members
 
-| Student ID | Name   | GitLab Username |
-| ---------- | ------ | --------------- |
-| 2022148004 | 이협   | dlguq0107       |
-| 2018122053 | 노우준 | 2018122053      |
-| 2022148047 | 최우현 | starwh          |
-| 2021147562 | 김이주 | 2021147562      |
-| 2022148082 | 김승원 | goosull         |
-| 2018122018 | 박태주 | taejoo          |
-| 2021123062 | 유광수 | YuKwangsu       |
-| 2021182012 | 손예원 | SonYewon        |
-| 2018122021 | 최병준 | ByungJune       |
+| Student ID | Name   | GitLab Username | Contact               | Experience              |
+| ---------- | ------ | --------------- | --------------------- | ----------------------- |
+| 2022148004 | 이협   | dlguq0107       |                       |                         |
+| 2018122053 | 노우준 | 2018122053      | woojunro@yonsei.ac.kr | FE(ReactJS), BE(NodeJS) |
+| 2022148047 | 최우현 | starwh          |                       |                         |
+| 2021147562 | 김이주 | 2021147562      |                       |                         |
+| 2022148082 | 김승원 | goosull         |                       |                         |
+| 2018122018 | 박태주 | taejoo          |                       |                         |
+| 2021123062 | 유광수 | YuKwangsu       |                       |                         |
+| 2021182012 | 손예원 | SonYewon        |                       |                         |
+| 2018122021 | 최병준 | ByungJune       |                       |                         |
 
 ## Roles
+
 | Iteration   | Team Leader | Planning Leader | QA Leader |
 | ----------- | ----------- | --------------- | --------- |
-| Iteration 1 | 노우준      | 최우현           | 이협      |
-| Iteration 2 | 유광수      | 김이주           | 박태주    |
+| Iteration 1 | 노우준      | 최우현          | 이협      |
+| Iteration 2 | 유광수      | 김이주          | 박태주    |
 
 ## Regular Meeting
 
@@ -40,6 +41,7 @@
 - [New UC](docs/use-cases/NEWUC.md)
 
 ## User Story
+
 - [User Story](docs/user-story.md)
 
 ## Presentations
