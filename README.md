@@ -4,7 +4,7 @@
 
 | Student ID | Name   | GitLab Username | Contact               | Experience              |
 | ---------- | ------ | --------------- | --------------------- | ----------------------- |
-| 2022148004 | 이협   | dlguq0107       |                       |                         |
+| 2022148004 | 이협   | dlguq0107       | dlguq0107@yonsei.ac.kr | BE(java)               |
 | 2018122053 | 노우준 | 2018122053      | woojunro@yonsei.ac.kr | FE(ReactJS), BE(NodeJS) |
 | 2022148047 | 최우현 | starwh          | starwh03@yonsei.ac.kr | BE(java)                |
 | 2021147562 | 김이주 | 2021147562      | kim2ju@yonsei.ac.kr   | BE(java)                |
