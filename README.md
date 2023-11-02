@@ -47,3 +47,4 @@
 ## Presentations
 
 - [Iteration 1](docs/iteration1.md)
+- [Iteration 1 Notion](https://guttural-stinger-5d4.notion.site/Iteration-1-eac9d5b126b64924b2bb357b259b7846?pvs=4)
