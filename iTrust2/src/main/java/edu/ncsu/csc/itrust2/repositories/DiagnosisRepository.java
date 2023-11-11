@@ -11,4 +11,6 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
 
     public List<Diagnosis> findByVisit ( OfficeVisit visit );
 
+    //add
+    public List<Diagnosis> findByidOrderByVisitDesc ( Long id );
 }
