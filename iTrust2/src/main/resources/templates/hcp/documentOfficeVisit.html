@@ -368,6 +368,29 @@
                                     $scope.errorMsg = "Error occurred creating office visit";
                                 })
                             }
+                        } else if ($scope.visit.type === 'OPHTHALMOLOGY_SURGERY') {
+                            checkBasicHealthMetrics();
+                            if ($scope.errorMsg == "") {
+                                $scope.visit.diagnoses = $scope.diagnoses;
+                                $scope.visit.prescriptions = $scope.prescriptions;
+                                $scope.visit.prescriptions.forEach(function (p) {
+                                    p.patient = $scope.visit.patient;
+                                });
+
+                                $scope.visit.labProcedures = $scope.procedures;
+                                
+                                $http({
+                                    method: 'POST',
+                                    url: '/iTrust2/api/v1/officevisits',
+                                    data: $scope.visit
+                                }).then(function (response) {
+                                    $scope.errorMsg = "";
+                                    $scope.message = "Office visit created successfully";
+                                }, function (rejection) {
+                                    $scope.message = "";
+                                    $scope.errorMsg = "Error occurred creating office visit";
+                                })
+                            }
                         }
                          else {
                             $scope.message = "";
