@@ -368,8 +368,9 @@
                                     $scope.errorMsg = "Error occurred creating office visit";
                                 })
                             }
-                        }
-                         else {
+                        } else if($scope.visit.type == 'OPHTHALMOLOGY_SURGERY') {
+							
+						} else {
                             $scope.message = "";
                             $scope.errorMsg = "Invalid office visit type";
                         }
@@ -963,7 +964,124 @@
 											</div>
 										</div>
 									</div>
+								</div>
 
+								<!-- Ophthalmology Surgery Information -->
+								<div ng-show="visit.type == 'OPHTHALMOLOGY_SURGERY'" class="row">
+									<div class="col-md-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Ophthalmology Surgery Information</h4>
+											</div>
+											<div class="panel-body">
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Surgery Date:</label>
+													</div>
+													<div class="col-xs-6">
+														<input type="date" class="form-control" name="surgeryEntry"
+															ng-model="visit.surgeryEntry" required />
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Visual Acuity Results:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="visualAcuityOD"
+															ng-model="visit.visualAcuityOD" required></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="visualAcuityOS"
+															ng-model="visit.visualAcuityOS" required></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Sphere:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="sphereOS"
+															ng-model="visit.sphereOD" required></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="sphereOS"
+															ng-model="visit.sphereOS" required></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Cylinder:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="cylinderOD"
+															ng-model="visit.cylinderOD"></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="cylinderOS"
+															ng-model="visit.cylinderOS"></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Axis:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="axisOD"
+															ng-model="visit.axisOD"></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="axisOS"
+															ng-model="visit.axisOS"></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Surgery Type:</label>
+													</div>
+													<div class="col-xs-6">
+														<select name="surgeryType" ng-model="visit.surgeryType"
+															required="true">
+															<option value="CATARACT">Cataract Surgery</option>
+															<option value="LASER">Laser Surgery</option>
+															<option value="REFRACTIVE">Refractive Surgery</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Notes:</label>
+														<textarea name="surgeryNotes" ng-model="visit.surgeryNotes"
+															class="form-control" rows="3"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 								<!-- Notes and Error Messages -->
 								<div class="row">
