@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: head(title=~{::title},links=~{})">
+<title>View Office Visits</title>
+</head>
+
+<body th:include="layout :: body" th:with="content=~{::content}">
+	<div th:fragment="content">
+
+
+		<script th:inline="javascript">
+      /* Otherwise Thymeleaf tries to parse Javascript as XML and breaks itself sometimes.  Sigh */
+      /*<![CDATA[*/
+      var app = angular.module("pastApp", []);
+
+      app.controller('pastCtrl', function ($scope, $http) {
+        $scope.pasts = [];
+        $scope.pattern = /^\d{4}-\d{4}-\d{2}$/;
+        $scope.loadTable = function () {
+          $http.get("/iTrust2/api/v1/past").then(
+            function (response) {
+              $scope.pasts = response.data;
+              $scope.message = "";
+            }, function (rejection) {
+              $scope.pasts = [];
+              $scope.message = "Could not display Past Office Visit";
+            });
+        }
+        $scope.loadTable();
+      });
+			/*]]>*/
+    </script>
+
+		<div ng-app="pastApp" ng-controller="pastCtrl">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3>Patient View Past Office Visit</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-bordered">
+									<caption>My Office Visits:</caption>
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Visual Acuity Results</th>
+											<th>Sphere</th>
+											<th>Cylinder</th>
+											<th>Axis</th>
+                                            <th>Surgery Type</th>
+                                            <th>Notes</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr name="pastTableRow"
+											ng-repeat="p in pasts | orderBy: 'date'"
+											prescriptionId={{p.id}}>
+											<td name="dateCell">{{p.date | date : 'MM/dd/yyyy'}}</td>
+											<td name="varCell">{{p.var}}</td>
+											<td name="sphereCell">{{p.sphere}}</td>
+											<td name="cylinderCell">{{p.cylinder}}</td>
+											<td name="axisCell">{{p.axis}}</td>
+                                            <td name="typeCell">{{p.type}}</td>
+                                            <td name="noteCell">{{p.note}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
