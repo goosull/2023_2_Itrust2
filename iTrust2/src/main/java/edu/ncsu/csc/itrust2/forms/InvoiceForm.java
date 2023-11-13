@@ -14,10 +14,8 @@ public class InvoiceForm implements Serializable {
     private String hcp;
 
     private String patient;
-    
-    private String startDate;
 
-    private String endDate;
+    private String dueDate;
 
     private int cost;
 
@@ -39,10 +37,32 @@ public class InvoiceForm implements Serializable {
     	setId( invoice.getId() );
     	setHcp( invoice.getHcp().getUsername() );
     	setPatient( invoice.getPatient().getUsername() );
-    	setStartDate ( invoice.getStartDate().toString() );
-    	setEndDate ( invoice.getEndDate().toString() );
+    	setDueDate ( invoice.getDueDate().toString() );
     	setCost( invoice.getCost() );
     	setStatus( invoice.getStatus() );
+    }
+    
+    /**
+     * Create a InvoiceForm from all of its fields.
+     *
+     * @param hcp
+     *            Name of HCP
+     * @param patient
+     *            Name of Patient
+     * @param dueDate
+     *            invoice's due date
+     * @param cost
+     *            invoice's cost
+     * @param status
+     *            invoice status  
+     *
+     */
+    public InvoiceForm(String hcp, String patient, String dueDate, int cost, InvoiceStatus status) {
+    	setHcp( hcp );
+    	setPatient( patient );
+    	setDueDate ( dueDate );
+    	setCost( cost );
+    	setStatus( status );
     }
     
     /**
@@ -101,43 +121,24 @@ public class InvoiceForm implements Serializable {
     public void setPatient ( final String patient ) {
         this.patient = patient;
     }
-    
+
     /**
-     * Returns the service's start date.
+     * Returns the service's due date.
      *
-     * @return service's start date
+     * @return service's due date
      */
-    public String getStartDate () {
-        return startDate;
+    public String getDueDate () {
+        return dueDate;
     }
 
     /**
-     * Sets the service's start date.
+     * Sets the service's due date.
      *
-     * @param startDate
-     *            service's start date
+     * @param dueDate
+     *            service's due date
      */
-    public void setStartDate ( final String startDate ) {
-        this.startDate = startDate;
-    }
-
-    /**
-     * Returns the service's end date.
-     *
-     * @return service's end date
-     */
-    public String getEndDate () {
-        return endDate;
-    }
-
-    /**
-     * Sets the service's end date.
-     *
-     * @param endDate
-     *            service's end date
-     */
-    public void setEndDate ( final String endDate ) {
-        this.endDate = endDate;
+    public void setDueDate ( final String dueDate ) {
+        this.dueDate = dueDate;
     }
     
     /**

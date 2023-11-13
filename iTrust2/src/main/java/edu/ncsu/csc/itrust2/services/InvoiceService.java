@@ -40,11 +40,25 @@ public class InvoiceService extends Service {
 	public Invoice build ( final InvoiceForm form ) {
         final Invoice iv = new Invoice();
 
-        iv.setId( form.getId() );
+        if ( form.getId() != null ) {
+            iv.setId( form.getId() );
+        }
+        
         iv.setHcp( userService.findByName( form.getHcp() ) );
         iv.setPatient( userService.findByName( form.getPatient() ) );
-        iv.setStartDate( LocalDate.parse( form.getStartDate() ) );
-        iv.setEndDate( LocalDate.parse( form.getEndDate() ) );
+        
+        final LocalDate formDueDate = LocalDate.parse( form.getDueDate() );
+        if ( formDueDate.isBefore( LocalDate.now() ) ) {
+            throw new IllegalArgumentException( "Cannot request a due date before the current time" );
+        }
+        
+        iv.setDueDate( formDueDate );
+        
+        final int formCost = form.getCost();
+        if ( formCost < 0 ) {
+            throw new IllegalArgumentException( "Cannot request a cost less than zero" );
+        }
+        
         iv.setCost( form.getCost() );
         iv.setStatus( form.getStatus() );
 

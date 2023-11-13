@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateConverter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.google.gson.annotations.JsonAdapter;
 
@@ -21,6 +24,7 @@ import edu.ncsu.csc.itrust2.adapters.LocalDateAdapter;
 import edu.ncsu.csc.itrust2.models.enums.InvoiceStatus;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Invoice extends DomainObject {
 	
 	/**
@@ -43,17 +47,17 @@ public class Invoice extends DomainObject {
     @JoinColumn ( name = "patient_id", columnDefinition = "varchar(100)" )
     private User patient;
     
-    @NotNull
     @Basic
     @Convert ( converter = LocalDateConverter.class )
     @JsonAdapter ( LocalDateAdapter.class )
-    private LocalDate startDate;
+    @CreatedDate
+    private LocalDate createdDate;
 
     @NotNull
     @Basic
     @Convert ( converter = LocalDateConverter.class )
     @JsonAdapter ( LocalDateAdapter.class )
-    private LocalDate endDate;
+    private LocalDate dueDate;
     
     @Min ( 0 )
     private int cost;
@@ -120,41 +124,31 @@ public class Invoice extends DomainObject {
     }
     
     /**
-     * Returns the service's start date.
+     * Returns the service's created date.
      *
-     * @return service's start date
+     * @return service's created date
      */
-    public LocalDate getStartDate () {
-        return startDate;
+    public LocalDate getCreatedDate () {
+        return createdDate;
     }
 
     /**
-     * Sets the service's start date.
+     * Returns the service's due date.
      *
-     * @param startDate
-     *            service's start date
+     * @return service's due date
      */
-    public void setStartDate ( final LocalDate startDate ) {
-        this.startDate = startDate;
+    public LocalDate getDueDate () {
+        return dueDate;
     }
 
     /**
-     * Returns the service's end date.
+     * Sets the service's due date.
      *
-     * @return service's end date
+     * @param dueDate
+     *            service's due date
      */
-    public LocalDate getEndDate () {
-        return endDate;
-    }
-
-    /**
-     * Sets the service's end date.
-     *
-     * @param endDate
-     *            service's end date
-     */
-    public void setEndDate ( final LocalDate endDate ) {
-        this.endDate = endDate;
+    public void setDueDate ( final LocalDate dueDate ) {
+        this.dueDate = dueDate;
     }
     
     /**
