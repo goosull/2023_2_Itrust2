@@ -1,5 +1,6 @@
 package edu.ncsu.csc.itrust2.controllers.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -190,5 +191,37 @@ public class APIPatientController extends APIController {
         }
 
     }
+    /**
+     * Get the list of appropriate patients according to User's input
+     * 
+     * @param Nameid User's input
+     * 
+     * @return list of searched patients
+     */
+    @GetMapping ( BASE_PATH + "/viewHCP or /viewER" )
+    @PreAuthorize ( "hasRole( 'ROLE_HCP' ) or hasRole( 'ROLE_ER' )")
+    public ResponseEntity getPatients ( @PathVariable String Nameid){
+        if ( Nameid == null) {
+            return new ResponseEntity(errorResponse("You should enter the valid Patient's name or Username"), HttpStatus.BAD_REQUEST);
+        }
+        else {
+            List<Patient> patients = (List<Patient>) patientService.findAll();
+            List<Patient> searchedPatients = new ArrayList<>();
 
+            if ( patients == null ) {
+                return new ResponseEntity( errorResponse( "No Patient found for username " + Nameid ),
+                    HttpStatus.NOT_FOUND );
+            }
+            else {
+                for (int i = 0; i < patients.size(); i++){
+                    if((patients.get(i).getUsername().matches(Nameid)) || ((patients.get(i).getFirstName()+patients.get(i).getLastName()).matches(Nameid))){
+                        searchedPatients.add(patients.get(i));
+                    }
+                }
+                loggerUtil.log( TransactionType.PATIENT_DEMOGRAPHICS_VIEW, LoggerUtil.currentUser(), Nameid,
+                    "HCP searched patient with Patient's name or Username " + Nameid );
+                return new ResponseEntity( searchedPatients, HttpStatus.OK );
+            }
+        }
+    }   
 }
