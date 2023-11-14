@@ -55,7 +55,7 @@
 									</thead>
 									<tbody>
 										<tr name="pastTableRow"
-											ng-repeat="p in pasts | orderBy: 'date'"
+											ng-repeat="p in pastCtrl. | orderBy: 'date'"
 											prescriptionId={{p.id}}>
 											<td name="dateCell">{{p.date | date : 'MM/dd/yyyy'}}</td>
 											<td name="varCell">{{p.var}}</td>
