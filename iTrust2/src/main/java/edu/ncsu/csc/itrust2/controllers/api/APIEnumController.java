@@ -16,6 +16,7 @@ import edu.ncsu.csc.itrust2.models.enums.BloodType;
 import edu.ncsu.csc.itrust2.models.enums.Ethnicity;
 import edu.ncsu.csc.itrust2.models.enums.Gender;
 import edu.ncsu.csc.itrust2.models.enums.HouseholdSmokingStatus;
+import edu.ncsu.csc.itrust2.models.enums.OphthalmologySurgeryType;
 import edu.ncsu.csc.itrust2.models.enums.PatientSmokingStatus;
 import edu.ncsu.csc.itrust2.models.enums.Role;
 import edu.ncsu.csc.itrust2.models.enums.State;
@@ -137,4 +138,16 @@ public class APIEnumController extends APIController {
         return ret;
     }
 
+
+    /**
+     * Get Ophthalmology Surgery Type
+     *
+     * @return Ophthalmology Surgery Type
+     */
+    @GetMapping ( BASE_PATH + "/ophthsurgery" )
+    public List<OphthalmologySurgeryType> getOphthalmologySurgeryTypes () {
+        final List<OphthalmologySurgeryType> ret = Arrays.asList( OphthalmologySurgeryType.values() ).subList(1,
+                OphthalmologySurgeryType.values().length );
+        return ret;
+    }
 }

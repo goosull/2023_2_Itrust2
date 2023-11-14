@@ -162,6 +162,11 @@
                         function (response) {
                             $scope.icdcodes = response.data;
                         });
+					/*Getting a list of surgery types*/
+					$http.get("/iTrust2/api/v1/ophthsurgery").then(
+						function (response){
+							$scope.ophthsurgery = response.data;
+						});
 
                     /*Getting a list of laboratory procedures*/
                     $http.get("/iTrust2/api/v1/personnel/getbyroles/ROLE_LABTECH").then(
@@ -369,7 +374,11 @@
                                 })
                             }
                         } else if($scope.visit.type == 'OPHTHALMOLOGY_SURGERY') {
-							
+							checkEyeHealthMetrics();
+							if ($scope.errorMsg == "") {
+								// POST API
+
+							}
 						} else {
                             $scope.message = "";
                             $scope.errorMsg = "Invalid office visit type";
@@ -1059,17 +1068,22 @@
 															ng-model="visit.axisOS"></input>
 													</div>
 												</div>
+
 												<div class="form-group row">
 													<div class="col-xs-6">
 														<label>Surgery Type:</label>
 													</div>
-													<div class="col-xs-6">
-														<select name="surgeryType" ng-model="visit.surgeryType"
-															required="true">
-															<option value="CATARACT">Cataract Surgery</option>
-															<option value="LASER">Laser Surgery</option>
-															<option value="REFRACTIVE">Refractive Surgery</option>
-														</select>
+													<div class="col-xs-6 radio-box">
+														<div class="form-check">
+															<ul style="list-style: none;">
+																<li ng-repeat="ophthtype in ophthsurgery"><label>
+																		<input type="radio"
+																		ng-model="$parent.visit.surgeryType"
+																		name="surgeryType" value="{{ophthtype}}"
+																		required="true" /> {{ophthtype}}
+																</label></li>
+															</ul>
+														</div>
 													</div>
 												</div>
 												<div class="form-group row">
