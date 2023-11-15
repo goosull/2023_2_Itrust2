@@ -102,7 +102,7 @@ public class HCPController {
      */
     @GetMapping ( "/hcp/viewEHR" )
     @PreAuthorize ( "hasRole('ROLE_HCP')" )
-    public String viewInvoices ( final Model model ) {
+    public String viewEHR ( final Model model ) {
         return "/hcp/viewEHR";
     }
     

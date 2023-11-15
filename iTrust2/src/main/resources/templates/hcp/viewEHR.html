@@ -10,7 +10,81 @@
 	<div th:fragment="content">
 		<div class="container">
 
-		
+
+			<script th:inline="javascript">
+
+                var app = angular.module('myApp', ['dateTimeServices']);
+
+                app.controller('emergencyHealthRecordCtrl', function ($scope, $http, dateTimeService) {
+					
+					$scope.name = "";
+					$scope.mid = "";
+
+					$scope.patients = [];
+					
+					$scope.selectedPatient = null;
+					
+					$scope.searchPatientByName = function(){
+						
+				        $http({
+				            method: 'GET',
+				            url: '/iTrust2/api/v1/viewHCP',
+				            params: { Nameid: $scope.name }
+				        }).then(function (response) {
+				            $scope.patients = response.data;
+				        });
+					};
+
+					
+					$scope.searchPatientByName_Test = function(){
+						
+						$scope.p1 = {firstName: "minsu",
+									lastName: "Kim",
+									id: "KKmm"};
+						
+						$scope.p2 = {firstName: "sumin",
+									lastName: "Lee",
+									id: "LLss"};
+									
+						$scope.p3 = {firstName: "minji",
+									lastName: "Park",
+									id: "PPmm"};
+						
+						$scope.patients = [$scope.p1, $scope.p2, $scope.p3];
+					
+					};
+
+					$scope.searchPatientByMID = function(){
+						
+				        $http({
+				            method: 'GET',
+				            url: '/iTrust2/api/v1/viewHCP',
+				            params: { Nameid: $scope.mid }
+				        }).then(function (response) {
+				            $scope.patients = response.data;
+				        });
+					};			
+
+
+					$scope.selectPatient = function(patient){
+						$scope.selectedPatient = patient;
+					};
+					
+					
+					$scope.ehr = [];
+					
+					$scope.searchEHR = function(){
+				        $http({
+				            method: 'GET',
+				            url: '/iTrust2/api/v1/viewHCP/ehr',
+				            params: { patient: $scope.selectedPatient }
+				        }).then(function (response) {
+				            $scope.ehr = response.data;
+				        });
+					};
+					
+                });
+            </script>
 
 			<div ng-app="myApp" ng-controller="emergencyHealthRecordCtrl">
 				<div class="row">
@@ -24,7 +98,7 @@
 
 
 									<!-- Search Panel  -->
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<div class="panel panel-info">
 											<div class="panel-heading">
 												<h4>Search</h4>
@@ -33,20 +107,37 @@
 												
 												<div class="form-group row">
 													<div class="col-xs-6">
-														<label>patient's name or username/MID:</label>
+														<label>patient's name:</label>
 													</div>
 													<div class="col-xs-6">
-														<input class="form-control" name=""
-															ng-model="" required="true" type="text">
+														<input class="form-control" ng-model="name" required="true" type="text">
 													</div>
 												</div>
 
-												<div class="form-group row text-center">
+												<div class="form-group row text-right">
 													<div class="col-md-12">
-														<button class="btn btn-success" ng-click=""
-															name="">Search</button>
+														<button class="btn btn-success" ng-click="searchPatientByName_Test()"
+															name="searchByName">Search By Name</button>
 													</div>
 												</div>
+												
+												
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>patient's username/MID:</label>
+													</div>
+													<div class="col-xs-6">
+														<input class="form-control" ng-model="mid" required="true" type="text">
+													</div>
+												</div>
+
+												<div class="form-group row text-right">
+													<div class="col-md-12">
+														<button class="btn btn-success" ng-click="searchPatientByMID_Test()"
+															name="searchByMID">Search By MID</button>
+													</div>
+												</div>
+												
 
 											</div>
 										</div>
@@ -54,23 +145,87 @@
 
 
 									<!-- Patient List Panel -->
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<div class="panel panel-info">
 											<div class="panel-heading">
 												<h4>Patient List</h4>
 											</div>
 											<div class="panel-body">
+
 												
+												<ul style="overflow: auto;height=90%;">
+													<li ng-repeat="p in patients"><h4>
+														<label> <input type="radio"
+															name="patient"
+															value="{{p.id}}"
+															ng-click='selectPatient(p)' />&nbsp;{{p.firstName}} {{p.lastName}}, {{p.id}}
+														</label>
+													</h4></li>
+												</ul>
 												
+												you select: {{selectedPatient.firstName}}
+
 												<div class="form-group row text-center">
-													<button class="btn btn-success"
-														ng-click="" name="">Select</button>
+													<div class="col-md-12">
+														<button class="btn btn-success" ng-click="searchEHR()"
+															name="select">Select</button>
+													</div>
 												</div>
 												
 												
 											</div>
 										</div>
 									</div>
+									
+									
+									
+									
+									
+									<!-- Emergency Health Record Panel -->
+									<div class="col-md-12">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Emergency Health Record</h4>
+											</div>
+											<div class="panel-body">
+
+												
+												<table class="table table-bordered" name="EHR_table">
+					
+													<!-- table column headers -->
+													<thead>
+														<tr>
+															<th>name</th>
+															<th>age</th>
+															<th>date of birth</th>
+															<th>gender</th>
+															<th>blood type</th>
+														</tr>
+													</thead>
+					
+													<tbody>
+														<tr name="EHRTableRow">
+															<td name="name">{{ehr[0]}}{{ehr[1]}}</td>
+															<td name="age">{{ehr[2]}}</td>
+															<td name="date of birth">{{ehr[3]}}</td>
+															<td name="gender">{{ehr[4]}}</td>
+															<td name="blood type">{{ehr[5]}}</td>
+														</tr>
+													</tbody>
+												</table>
+												
+												{{ehr[6]}}
+												{{ehr[7]}}
+
+												
+												
+											</div>
+										</div>
+									</div>
+									
+									
+									
+									
 								</div>
 
 
