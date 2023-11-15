@@ -10,36 +10,50 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-
                         <!-- log entry header -->
                         <div class="panel-heading">
                             <h3>Visit Histories</h3>
                         </div>
                         <div class="panel-body">
-                            <table class="table table-bordered" name="log_table">
 
+                            <table class="table table-bordered" name="log_table">
+                                
                                 <!-- table column headers -->
                                 <thead>
                                 <tr>
                                     <th>Visit Type</th>
                                     <th>Patient Name</th>
-                                    <th>Disease Type</th>
+                                    <th>Disease Name</th>
                                     <th>Date & Time</th>
-                                    <th ng-if="ctrl.isPatient">Role</th>
+                                    <!-- <th ng-if="ctrl.isPatient">Role</th> -->
                                 </tr>
                                 </thead>
 
                                 <!-- log entry for every row, ordered by date -->
                                 <tbody>
-                                <tr name="logTableRow" ng-repeat="l in ctrl.logs">
-                                    <td name="transactionTypeCell">{{l.transactionType}}</td>
-                                    <td name="primaryUserCell">{{l.primary}}</td>
-                                    <td name="secondaryUserCell">{{l.secondary}}</td>
-                                    <td name="dateCell">{{l.dateTime | date : 'EEE MMM dd
-                                        h:mm:ss a yyyy'}}</td>
-                                    <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td>
+                                <tr name="logTableRow" ng-repeat="l in ctrl.logs" ng-show="ctrl.username === l.hcp.username">
+                                    <td name="type">{{l.type}}</td>
+                                    <td name="patient">{{l.patient.username}}</td>
+                                    <td name="disease">{{l.diagnoses[0].note}}</td>
+                                    <td name="date">{{l.date | date : 'EEE MMM dd
+                                        h:mm:ss a yyyy'}} <button class="btn btn-success btn-edit" style="
+                                        float: right;
+                                        width: 49.46px; 
+                                        height: 30.5px; 
+                                        ">Edit</button>
+                                    </td>
+                                    <!-- <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td> -->
                                 </tr>
                                 </tbody>
+                                <!-- <tbody>
+                                    <tr name="logTableRow" ng-repeat="l in ctrl.logs">
+                                        <td name="type">a</td>
+                                        <td name="patient">b</td>
+                                        <td name="diagnosis">c</td>
+                                        <td name="date">d</td>
+                                        <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td> 
+                                    </tr>
+                                    </tbody> -->
                             </table>
 
                             <br>
@@ -146,7 +160,7 @@
                     $http.get("/iTrust2/api/v1/curPersonnel", self.requestParams).then(function (response) {
                         // self.userdata = response.data;
                         self.username = response.data.username;
-                        // console.log(self.username);
+                        console.log(self.username);
                     });
                 }
 
