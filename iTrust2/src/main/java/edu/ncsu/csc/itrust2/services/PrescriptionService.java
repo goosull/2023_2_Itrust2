@@ -54,4 +54,19 @@ public class PrescriptionService extends Service {
         return repository.findByPatient( patient );
     }
 
+    //add
+    public List<Prescription> findByPatientForEHR ( final User patient ) {
+    	LocalDate startDate = LocalDate.now().minusDays(90);
+    	
+    	List<Prescription> prescriptions = repository.findByPatient(patient);
+    	
+        List<Prescription> prescriptionsLast90Days = prescriptions.stream()
+                .filter(prescription -> prescription.getStartDate().isAfter(startDate))
+                .collect(Collectors.toList());
+
+        prescriptionsLast90Days.sort((p1, p2) -> p2.getStartDate().compareTo(p1.getStartDate()));
+
+        return prescriptionsLast90Days;
+    }
+
 }

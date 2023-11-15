@@ -159,8 +159,8 @@ public class APIEHRController extends APIController {
 		DiagnosisService diagnosisService = new DiagnosisService();
 		PrescriptionService prescriptionService = new PrescriptionService();
 
-		List <Diagnosis> PatientDiagnosis = (List<Diagnosis>) diagnosisService.findByPatient(patient);
-		List <Prescription> PatientPrescriptions = (List<Prescription>) prescriptionService.findByPatient(patient);
+		List <Diagnosis> PatientDiagnosis = (List<Diagnosis>) diagnosisService.findByPatientForEHR(patient);
+		List <Prescription> PatientPrescriptions = (List<Prescription>) prescriptionService.findByPatientForEHR(patient);
 
 		List EHR = new ArrayList();
 		EHR.add(patient.getFirstName());
