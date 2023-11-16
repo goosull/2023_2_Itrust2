@@ -2,6 +2,7 @@ package edu.ncsu.csc.itrust2.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 

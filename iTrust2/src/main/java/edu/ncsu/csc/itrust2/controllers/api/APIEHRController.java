@@ -13,7 +13,6 @@ import edu.ncsu.csc.itrust2.models.enums.TransactionType;
 import edu.ncsu.csc.itrust2.models.Diagnosis;
 import edu.ncsu.csc.itrust2.models.Prescription;
 import edu.ncsu.csc.itrust2.models.Patient;
-import edu.ncsu.csc.itrust2.services.EHRService;
 import edu.ncsu.csc.itrust2.services.PrescriptionService;
 import edu.ncsu.csc.itrust2.services.DiagnosisService;
 import edu.ncsu.csc.itrust2.utils.LoggerUtil;
@@ -33,6 +32,12 @@ public class APIEHRController extends APIController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private DiagnosisService diagnosisService;
+
+	@Autowired
+	private PrescriptionService prescriptionService;
+
 	/**
 	 * HCP Retrieves Emergency Health Records for a patient based on the information provided in the EHRForm.
 	 * The EHR includes the patient's name, age, date of birth, gender, blood type, a list of short-term diagnoses
@@ -45,8 +50,6 @@ public class APIEHRController extends APIController {
 	@GetMapping ( BASE_PATH + "/viewHCP/{id}/ehr" )
     @PreAuthorize ( "hasAnyRole('ROLE_HCP')" )
 	public ResponseEntity HCPViewEHR(@RequestBody Patient patient) {
-		DiagnosisService diagnosisService = new DiagnosisService();
-		PrescriptionService prescriptionService = new PrescriptionService();
 
 		List <Diagnosis> PatientDiagnosis = (List<Diagnosis>) diagnosisService.findByPatient(patient);
 		List <Prescription> PatientPrescriptions = (List<Prescription>) prescriptionService.findByPatient(patient);
@@ -79,8 +82,6 @@ public class APIEHRController extends APIController {
 	@GetMapping ( BASE_PATH + "/viewER/{id}/ehr" )
     @PreAuthorize ( "hasAnyRole('ROLE_ER')" )
 	public ResponseEntity ERViewEHR(@RequestBody Patient patient) {
-		DiagnosisService diagnosisService = new DiagnosisService();
-		PrescriptionService prescriptionService = new PrescriptionService();
 
 		List <Diagnosis> PatientDiagnosis = (List<Diagnosis>) diagnosisService.findByPatientForEHR(patient);
 		List <Prescription> PatientPrescriptions = (List<Prescription>) prescriptionService.findByPatientForEHR(patient);
