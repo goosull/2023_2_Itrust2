@@ -49,7 +49,7 @@ public class APIInvoiceController extends APIController {
      */
     @PreAuthorize ( "hasAnyRole('ROLE_HCP')" )
     @PostMapping ( BASE_PATH + "/invoices" )
-    public ResponseEntity addPrescription ( @RequestBody final InvoiceForm form ) {
+    public ResponseEntity addInvoice ( @RequestBody final InvoiceForm form ) {
         try {
             final Invoice i = invoiceService.build( form );
             invoiceService.save( i );
@@ -74,7 +74,7 @@ public class APIInvoiceController extends APIController {
      * @return the paid invoice
      */
     @PreAuthorize ( "hasAnyRole('ROLE_PATIENT')" )
-    @PostMapping ( BASE_PATH + "/prescriptions/{id}/pay" )
+    @PostMapping ( BASE_PATH + "/invoices/{id}/pay" )
     public ResponseEntity payInvoice ( @PathVariable final Long id ) {
         try {
             final Invoice i = (Invoice) invoiceService.findById( id );
@@ -118,7 +118,7 @@ public class APIInvoiceController extends APIController {
      */
     @PreAuthorize ( "hasAnyRole('ROLE_HCP', 'ROLE_PATIENT')" )
     @GetMapping ( BASE_PATH + "/invoices" )
-    public List<Invoice> getPrescriptions () {
+    public List<Invoice> getInvoices () {
         final User self = userService.findByName( LoggerUtil.currentUser() );
         if ( self.isDoctor() ) {
         	// Return invoices assigned to the HCP
