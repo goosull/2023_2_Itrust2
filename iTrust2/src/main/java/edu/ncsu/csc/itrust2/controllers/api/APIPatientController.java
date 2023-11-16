@@ -205,7 +205,7 @@ public class APIPatientController extends APIController {
      * 
      * @return list of searched patients
      */
-    @GetMapping ( BASE_PATH + "/patient/{Name}" )
+    @GetMapping ( BASE_PATH + "/patient/name/{Name}" )
     @PreAuthorize ( "hasAnyRole( 'ROLE_HCP', 'ROLE_ER' )")
     public ResponseEntity getPatientsbyName ( @PathVariable("Name") String Name){
         if ( (Name == null) || (Pattern.matches(PatternOfName, Name) == false)) {
@@ -239,7 +239,7 @@ public class APIPatientController extends APIController {
      * 
      * @return list of searched patients
      */
-    @GetMapping ( BASE_PATH + "/patient/{Id}" )
+    @GetMapping ( BASE_PATH + "/patient/id/{Id}" )
     @PreAuthorize ( "hasAnyRole( 'ROLE_HCP', 'ROLE_ER' )")
     public ResponseEntity getPatientsbyId ( @PathVariable("Id") String Id){
         if ( (Id == null) || (Id.length() < 6) || (Id.length() > 20) || (Pattern.matches(PatternOfId, Id) == false)) {
