@@ -534,7 +534,22 @@ public enum TransactionType {
     /**
      * Virologist views R0 value
      */
-    VIROLOGIST_VIEW_RNAUGHT ( 3001, "Virologist views calculated R0 value", false );
+    VIROLOGIST_VIEW_RNAUGHT ( 3001, "Virologist views calculated R0 value", false ),
+    
+    /**
+     * HCP created a new invoice
+     */
+    INVOICE_CREATE ( 2300, "HCP created a new invoice", true ),
+    
+    /**
+     * Patient paid their invoice
+     */
+    INVOICE_PAY ( 2301, "Patient paid their invoice", true ),
+    
+    /**
+     * User viewed their list of invoices
+     */
+    INVOICE_VIEW ( 2302, "User viewed their list of invoices", true );
 
     /**
      * Creates a TransactionType for logging events
