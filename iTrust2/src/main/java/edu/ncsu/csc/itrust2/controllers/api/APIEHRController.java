@@ -51,8 +51,8 @@ public class APIEHRController extends APIController {
     @PreAuthorize ( "hasAnyRole('ROLE_HCP')" )
 	public ResponseEntity HCPViewEHR(@RequestBody Patient patient) {
 
-		List <Diagnosis> PatientDiagnosis = (List<Diagnosis>) diagnosisService.findByPatient(patient);
-		List <Prescription> PatientPrescriptions = (List<Prescription>) prescriptionService.findByPatient(patient);
+		List <Diagnosis> PatientDiagnosis = (List<Diagnosis>) diagnosisService.findByPatientForEHR(patient);
+		List <Prescription> PatientPrescriptions = (List<Prescription>) prescriptionService.findByPatientForEHR(patient);
 
 		List EHR = new ArrayList();
 		EHR.add(patient.getFirstName());

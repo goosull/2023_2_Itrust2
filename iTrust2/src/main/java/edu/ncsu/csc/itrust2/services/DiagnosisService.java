@@ -56,16 +56,18 @@ public class DiagnosisService extends Service {
 
     //add
     public List<Diagnosis> findByPatientForEHR( final User patient ) {
-    	final OfficeVisit ov = new OfficeVisit();
     	ZonedDateTime startDate = ZonedDateTime.now().minusDays(60);
-        ov.setDate( startDate );
     	
-    	List<Diagnosis> diagnosis = repository.findByVisitAfterOrderByVisitDesc( ov );
+    	List<Diagnosis> diagnosis = service.findByPatient( patient ).stream().map( e -> findByVisit( e ) ).flatMap( e -> e.stream() )
+    	        .collect( Collectors.toList() );
     	
-    	List<Diagnosis> diagnosisLast60Days = diagnosis.stream().filter(e -> e.getVisit().getPatient().equals(patient))
+        List<Diagnosis> diagnosisLast60Days = diagnosis.stream()
+                .filter(e -> e.getVisit().getDate().isAfter(startDate))
                 .collect(Collectors.toList());
-    	
-    	return diagnosisLast60Days;
+
+        diagnosisLast60Days.sort((p1, p2) -> p2.getVisit().getDate().compareTo(p1.getVisit().getDate()));
+
+        return diagnosisLast60Days;
     }
 
 }
