@@ -2,6 +2,7 @@ package edu.ncsu.csc.itrust2.controllers.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,10 @@ public class APIPatientController extends APIController {
 
     @Autowired
     private LoggerUtil     loggerUtil;
+
+    private String PatternOfId = "[A-Za-z0-9]+-_"; 
+
+    private String PatternOfName = "[A-Za-z0-9]+-_\\s+";
 
     /**
      * Retrieves and returns a list of all Patients stored in the system
@@ -191,36 +196,72 @@ public class APIPatientController extends APIController {
         }
 
     }
+
     /**
-     * Get the list of appropriate patients according to User's input
+     * The approved user enters the desired patients First and/or Last Name (or a correct substring of either/both) into the search box.  
+     * The patients with first/last names containing the substring(s) provided are shown.
      * 
-     * @param Nameid User's input
+     * @param Nameid User's input 
      * 
      * @return list of searched patients
      */
-    @GetMapping ( BASE_PATH + "/viewHCP or /viewER" )
+    @GetMapping ( BASE_PATH + "/patient/{Name}" )
     @PreAuthorize ( "hasAnyRole( 'ROLE_HCP', 'ROLE_ER' )")
-    public ResponseEntity getPatients ( @PathVariable String Nameid){
-        if ( Nameid == null) {
-            return new ResponseEntity(errorResponse("You should enter the valid Patient's name or Username"), HttpStatus.BAD_REQUEST);
+    public ResponseEntity getPatientsbyName ( @PathVariable("Name") String Name){
+        if ( (Name == null) || (Pattern.matches(PatternOfName, Name) == false)) {
+            return new ResponseEntity(errorResponse("You should enter the valid Patient's name"), HttpStatus.BAD_REQUEST);
         }
         else {
             List<Patient> patients = (List<Patient>) patientService.findAll();
             List<Patient> searchedPatients = new ArrayList<>();
 
             for (int i = 0; i < patients.size(); i++){
-                    if((patients.get(i).getUsername().matches(Nameid)) || ((patients.get(i).getFirstName()+patients.get(i).getLastName()).matches(Nameid))){
+                    if((patients.get(i).getFirstName()+patients.get(i).getLastName()).contains(Name)){
                         searchedPatients.add(patients.get(i));
                     }
                 }
 
             if ( searchedPatients.size() == 0 ) {
-                return new ResponseEntity( errorResponse( "No Patient found for username " + Nameid ),
+                return new ResponseEntity( errorResponse( "No Patient found for Name " + Name ),
                     HttpStatus.NOT_FOUND );
             }
             else {
                 return new ResponseEntity( searchedPatients, HttpStatus.OK );
             }
         }
-    }   
+    } 
+
+    /**
+     * The approved user enters the desired patients MID (username), or a correct substring of it, in the search box.  
+     * The patient/s matching the MID/MID substring are displayed.
+     * 
+     * @param Nameid User's input 
+     * 
+     * @return list of searched patients
+     */
+    @GetMapping ( BASE_PATH + "/patient/{Id}" )
+    @PreAuthorize ( "hasAnyRole( 'ROLE_HCP', 'ROLE_ER' )")
+    public ResponseEntity getPatientsbyId ( @PathVariable("Id") String Id){
+        if ( (Id == null) || (Id.length() < 6) || (Id.length() > 20) || (Pattern.matches(PatternOfId, Id) == false)) {
+            return new ResponseEntity(errorResponse("You should enter the valid Patient's Username"), HttpStatus.BAD_REQUEST);
+        }
+        else {
+            List<Patient> patients = (List<Patient>) patientService.findAll();
+            List<Patient> searchedPatients = new ArrayList<>();
+
+            for (int i = 0; i < patients.size(); i++){
+                    if(patients.get(i).getUsername().contains(Id)){
+                        searchedPatients.add(patients.get(i));
+                    }
+                }
+
+            if ( searchedPatients.size() == 0 ) {
+                return new ResponseEntity( errorResponse( "No Patient found for Username " + Id ),
+                    HttpStatus.NOT_FOUND );
+            }
+            else {
+                return new ResponseEntity( searchedPatients, HttpStatus.OK );
+            }
+        }
+    } 
 }
