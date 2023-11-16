@@ -62,15 +62,4 @@ public class EHRService extends Service {
         this.diagnosisRepository = diagnosisRepository;
         this.prescriptionRepository = prescriptionRepository;
     }
-
-
-    public List<Diagnosis> getPatientDiagnosis( final Long id ) {
-        // Implement logic to get diagnoses for the patient
-        return diagnosisRepository.findByidOrderByVisitDesc(id);
-    }
-
-    public List<Prescription> getPatientPrescriptions(Long id) {
-        // Implement logic to get prescriptions for the patient
-        return prescriptionRepository.findByidOrderByStartDateDesc(id);
-    }
 }
