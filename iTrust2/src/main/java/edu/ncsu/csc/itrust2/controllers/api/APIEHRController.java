@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,7 +47,7 @@ public class APIEHRController extends APIController {
 	 * @param Patient containing the information to identify the patient (name, last name, or id)
 	 * @return Response which include Emergency Health Records for the selected patient.
 	 */
-	@GetMapping ( BASE_PATH + "/viewHCP/{id}/ehr" )
+	@PostMapping ( BASE_PATH + "/hcp/view/ehr" )
     @PreAuthorize ( "hasAnyRole('ROLE_HCP')" )
 	public ResponseEntity HCPViewEHR(@RequestBody Patient patient) {
 
@@ -79,7 +79,7 @@ public class APIEHRController extends APIController {
 	 * @param Patient containing the information to identify the patient (name, last name, or id)
 	 * @return Response which include Emergency Health Records for the selected patient.
 	 */
-	@GetMapping ( BASE_PATH + "/viewER/{id}/ehr" )
+	@PostMapping ( BASE_PATH + "/er/view/ehr" )
     @PreAuthorize ( "hasAnyRole('ROLE_ER')" )
 	public ResponseEntity ERViewEHR(@RequestBody Patient patient) {
 
@@ -98,7 +98,7 @@ public class APIEHRController extends APIController {
 		EHR.add(PatientPrescriptions);
 
 		loggerUtil.log( TransactionType.ER_VIEW_ER, LoggerUtil.currentUser(), patient.getFirstName() + patient.getLastName(),
-            "HCP views EHR of patient " + patient.getFirstName() + patient.getLastName() );
+            "ER views EHR of patient " + patient.getFirstName() + patient.getLastName() );
 		return new ResponseEntity( EHR, HttpStatus.OK );
 	}
 	

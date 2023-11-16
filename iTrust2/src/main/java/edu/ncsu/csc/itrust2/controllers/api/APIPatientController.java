@@ -45,9 +45,9 @@ public class APIPatientController extends APIController {
     @Autowired
     private LoggerUtil     loggerUtil;
 
-    private String PatternOfId = "[A-Za-z0-9]+-_"; 
+    private String PatternOfId = "^[a-zA-Z0-9\\-_]+$"; 
 
-    private String PatternOfName = "[A-Za-z0-9]+-_\\s+";
+    private String PatternOfName = "^[a-zA-Z\\-\\'\\s]+$";
 
     /**
      * Retrieves and returns a list of all Patients stored in the system
