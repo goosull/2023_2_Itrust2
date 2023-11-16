@@ -31,15 +31,7 @@ public class APIEHRController extends APIController {
     private LoggerUtil loggerUtil;
 	
 	@Autowired
-	private EHRService service;
-	
-	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	public APIEHRController(EHRService EHRService) {
-		this.service = EHRService;
-	}
 
 	/**
 	 * HCP Retrieves Emergency Health Records for a patient based on the information provided in the EHRForm.
