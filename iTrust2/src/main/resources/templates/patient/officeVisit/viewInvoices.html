@@ -45,6 +45,7 @@
 									<thead>
 										<tr>
 											<th>HCP</th>
+											<th>Cost($)</th>
 											<th>Date</th>
 											<th>Due Date</th>
 											<th>Status</th>
@@ -56,6 +57,7 @@
 											ng-repeat="p in invoices | orderBy: 'createdDate'"
 											invoiceId={{p.id}}>
 											<td name="HCP">{{p.hcp.username}}</td>
+											<td name="Cost">{{p.cost}}</td>
 											<td name="Date">{{p.createdDate | date :
 												'MM/dd/yyyy'}}</td>
 											<td name="Due Date">{{p.dueDate | date :
