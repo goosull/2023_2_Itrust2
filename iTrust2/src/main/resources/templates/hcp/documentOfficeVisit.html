@@ -374,6 +374,11 @@
                                 $scope.visit.labProcedures = $scope.procedures;
                                 
                                 $scope.visit.invoices = $scope.invoices;
+                                $scope.visit.invoices.forEach(function (p) {
+                                    p.patient = $scope.visit.patient;
+                                    p.hcp = $scope.visit.hcp;
+                                    p.status = 1;
+                                });
                                 
                                 $http({
                                     method: 'POST',
