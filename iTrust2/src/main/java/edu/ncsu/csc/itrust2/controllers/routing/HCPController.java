@@ -93,4 +93,20 @@ public class HCPController {
         return "/hcp/documentOfficeVisit";
     }
 
+
+    /**
+     * Returns the form page for a HCP to document an OfficeVisit
+     *
+     * @param model
+     *            The data for the front end
+     * @return Page to display to the user
+     *
+     * later HCP -> othography
+     */
+    @GetMapping ( "/hcp/editOfficeVisit" )
+    @PreAuthorize ( "hasRole('ROLE_HCP')" )
+    public String editOfficeVisit ( final Model model ) {
+        return "/hcp/editOfficeVisit";
+    }
+
 }
