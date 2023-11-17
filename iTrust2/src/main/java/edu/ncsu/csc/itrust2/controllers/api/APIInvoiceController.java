@@ -84,7 +84,7 @@ public class APIInvoiceController extends APIController {
             	return new ResponseEntity( errorResponse( "No invoice found with id " + id ), HttpStatus.NOT_FOUND );
             }
             
-            if ( i.getPatient().getUsername() != LoggerUtil.currentUser() ) {
+            if ( !i.getPatient().getUsername().equals( LoggerUtil.currentUser() ) ) {
             	loggerUtil.log( TransactionType.INVOICE_PAY, LoggerUtil.currentUser(),
             			"Could not pay invoice with id " + id );
             	return new ResponseEntity( errorResponse( "Paying invoices of other patients is forbidden" ), HttpStatus.FORBIDDEN );
