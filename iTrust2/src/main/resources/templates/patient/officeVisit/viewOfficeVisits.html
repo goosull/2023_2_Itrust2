@@ -58,12 +58,12 @@
 											ng-repeat="p in pastCtrl. | orderBy: 'date'"
 											prescriptionId={{p.id}}>
 											<td name="dateCell">{{p.date | date : 'MM/dd/yyyy'}}</td>
-											<td name="varCell">{{p.var}}</td>
-											<td name="sphereCell">{{p.sphere}}</td>
-											<td name="cylinderCell">{{p.cylinder}}</td>
-											<td name="axisCell">{{p.axis}}</td>
+											<td name="varCell">{{p.visualAcuityOS, p.visualAcuityOD}}</td>
+											<td name="sphereCell">{{p.sphereOS, p.sphereOD}}</td>
+											<td name="cylinderCell">{{p.cylinderOS, p.cylinderOD}}</td>
+											<td name="axisCell">{{p.axisOS, p.axisOD}}</td>
                                             <td name="typeCell">{{p.type}}</td>
-                                            <td name="noteCell">{{p.note}}</td>
+                                            <td name="noteCell">{{p.visit.note}}</td>
 										</tr>
 									</tbody>
 								</table>
