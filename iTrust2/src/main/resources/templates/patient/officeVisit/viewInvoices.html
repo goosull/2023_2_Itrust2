@@ -54,7 +54,7 @@
 									<tbody>
 										<tr name="invoiceTableRow"
 											ng-repeat="p in invoices | orderBy: 'createdDate'"
-											prescriptionId={{p.id}}>
+											invoiceId={{p.id}}>
 											<td name="HCP">{{p.hcp.username}}</td>
 											<td name="Date">{{p.createdDate | date :
 												'MM/dd/yyyy'}}</td>
