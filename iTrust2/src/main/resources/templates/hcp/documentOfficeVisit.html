@@ -81,14 +81,8 @@
 						if (!/^\+?\d+$/.test(p.cost)) {
                             err.push("Cost must be a positive integer");
                         }
-                        if (!dateTimeService.isValidDate(p.createdDate)) {
-                            err.push("Created date is in an invalid format");
-                        }
                         if (!dateTimeService.isValidDate(p.dueDate)) {
                             err.push("Due date is in an invalid format");
-                        }
-                        if (p.createdDate > p.dueDate) {
-                            err.push("Created date must be earlier than due date");
                         }
 						return err.join(". ");
 					}
@@ -377,7 +371,7 @@
                                 $scope.visit.invoices.forEach(function (p) {
                                     p.patient = $scope.visit.patient;
                                     p.hcp = $scope.visit.hcp;
-                                    p.status = 1;
+                                    p.status = 0;
                                 });
                                 
                                 $http({
@@ -410,7 +404,6 @@
                     $scope.renewalEntry = "";
 				
 					$scope.costEntry = "";
-                    $scope.createddateEntry = "";
                     $scope.duedateEntry = "";
 					
                     $scope.loincEntry = "";
@@ -439,7 +432,6 @@
                     // Clears local variables for cost form
                     function resetInvoiceForm() {
                         $scope.costEntry = "";
-                        $scope.createddateEntry = "";
                         $scope.duedateEntry = "";
                     }
                     
@@ -517,7 +509,6 @@
                         $scope.errorMsg = "";
                         var p = {
                             cost: $scope.costEntry,
-                            createdDate: $scope.createddateEntry,
                             dueDate: $scope.duedateEntry,
                         }
                         
@@ -526,7 +517,6 @@
                             $scope.errorMsg = err;
                             $scope.message = "";
                         } else {
-                            p.createdDate = dateTimeService.toDateString(p.createdDate);
                             p.dueDate = dateTimeService.toDateString(p.dueDate);
                             $scope.invoices.push(p);
                             resetInvoiceForm();
@@ -1052,15 +1042,6 @@
 												</div>
 												<div class="form-group row">
 													<div class="col-xs-6">
-														<label>Created Date:</label>
-													</div>
-													<div class="col-xs-6">
-														<input type="date" class="form-control" name="createddateEntry"
-															ng-model="createddateEntry" required />
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-xs-6">
 														<label>Due Date:</label>
 													</div>
 													<div class="col-xs-6">
@@ -1083,8 +1064,6 @@
 																	<br>
 																	<div class="col-md-1"></div>
 																	<!-- "tab" over columns -->
-																	<div class="col-md-3">{{p.createdDate | date :
-																		'MM/dd/yyyy'}}</div>
 																	<div class="col-md-3">{{p.dueDate | date :
 																		'MM/dd/yyyy'}}</div>
 																	<div class="col-md-1">
