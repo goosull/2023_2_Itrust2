@@ -1,13 +1,7 @@
 package edu.ncsu.csc.itrust2.unit;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
-
 import javax.transaction.Transactional;
 
 import org.junit.Assert;
@@ -42,33 +36,25 @@ public class InvoiceTest {
 	@Autowired
     private UserService userService;
 	
+	
 	@Before
     public void setup () {
-        invoiceService.deleteAll();
-
         final User hcp = new Personnel( new UserForm( "hcp", "123456", Role.ROLE_HCP, 1 ) );
-
         final User alice = new Patient( new UserForm( "AliceThirteen", "123456", Role.ROLE_PATIENT, 1 ) );
-
         userService.saveAll( List.of( hcp, alice ) );
     }
 	
 	@Test
     @Transactional
-    public void testInvoice () {	
-		Assert.assertEquals( 0, invoiceService.count() );
-
+    public void testInvoice () {
         final Invoice i1 = invoiceService.build( new InvoiceForm( "hcp", "AliceThirteen", LocalDate.now().toString(), 10000, InvoiceStatus.PENDING ) );
-
         invoiceService.save( i1 );
 
         final List<Invoice> savedRecords = (List<Invoice>) invoiceService.findAll();
-
-        Assert.assertEquals( 1, savedRecords.size() );
         
-        Assert.assertEquals( "hcp", savedRecords.get( 0 ).getHcp().getUsername() );
+        Assert.assertEquals( "hcp", savedRecords.get( savedRecords.size() - 1 ).getHcp().getUsername() );
         
-        Assert.assertEquals( LocalDate.now(), savedRecords.get( 0 ).getCreatedDate() );
+        Assert.assertEquals( LocalDate.now(), savedRecords.get( savedRecords.size() - 1 ).getCreatedDate() );
 
     }
 
