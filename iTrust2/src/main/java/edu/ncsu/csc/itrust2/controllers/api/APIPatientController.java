@@ -249,8 +249,21 @@ public class APIPatientController extends APIController {
             List<Patient> patients = (List<Patient>) patientService.findAll();
             List<Patient> searchedPatients = new ArrayList<>();
 
+            String username;
             for (int i = 0; i < patients.size(); i++){
-                    if(patients.get(i).getUsername().contains(Id)){
+            		username = patients.get(i).getUsername();
+            		int indexOfId = 0;
+            		boolean find = false;
+            		for (int j = 0; j < username.length(); j++) {
+            			if (username.charAt(j) == Id.charAt(indexOfId)) {
+            				indexOfId++;
+            				if (indexOfId == Id.length()) {
+            					find = true;
+            					break;
+            				}
+            			}
+            		}
+                    if(find){
                         searchedPatients.add(patients.get(i));
                     }
                 }
