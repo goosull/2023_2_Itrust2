@@ -43,4 +43,17 @@ public class ERController {
         return "personnel/records";
     }
 
+    /**
+     * Returns the page for a ER to view Emergency Health Records
+     *
+     * @param model
+     *            The data for the front end
+     * @return Page to display to the user
+     */
+    @GetMapping ( "/er/viewEHR" )
+    @PreAuthorize ( "hasRole('ROLE_ER')" )
+    public String viewEHR ( final Model model ) {
+        return "/er/viewEHR";
+    }
+
 }
