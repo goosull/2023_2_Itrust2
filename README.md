@@ -32,6 +32,7 @@
 - [10.28](docs/minutes/minutes_1028.md)
 - [11.04](docs/minutes/minutes_1104.md)
 - [11.11](docs/minutes/minutes_1111.md)
+- [11.18](docs/minutes/minutes_1118.md)
 
 ## Use Cases
 
