@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
 import edu.ncsu.csc.itrust2.models.OfficeVisit;
+import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.enums.HouseholdSmokingStatus;
+import edu.ncsu.csc.itrust2.models.enums.OphthalmologySurgeryType;
 import edu.ncsu.csc.itrust2.models.enums.PatientSmokingStatus;
 
 /**
@@ -62,6 +67,8 @@ public class OfficeVisitForm implements Serializable {
      */
     @NotEmpty
     private String                 type;
+
+    private OphthalmologySurgeryType surgeryType;
 
     /**
      * Hospital where the OfficeVisit occurred
@@ -140,6 +147,22 @@ public class OfficeVisitForm implements Serializable {
 
     private List<PrescriptionForm> prescriptions;
 
+    private Long    visualAcuityOS;
+
+    private Long    visualAcuityOD;
+
+    private Double  sphereOS;
+
+    private Double  sphereOD;
+
+    private Double  cylinderOS;
+
+    private Double  cylinderOD;
+    
+    private Long    axisOS;
+
+    private Long    axisOD;
+
     /**
      * Creates an OfficeVisitForm from the OfficeVisit provided
      *
@@ -147,6 +170,25 @@ public class OfficeVisitForm implements Serializable {
      *            OfficeVisit to turn into an OfficeVisitForm
      */
     public OfficeVisitForm ( final OfficeVisit ov ) {
+        toForm(ov);
+    }
+
+    public OfficeVisitForm ( final OphthalmologySurgeryInformation osi ){
+        toForm(osi.getVisit());
+
+        setVisualAcuityOS( osi.getVisualAcuityOS() );
+        setVisualAcuityOD( osi.getVisualAcuityOD() );
+        setSphereOS( osi.getSphereOS() );
+        setSphereOD( osi.getSphereOD() );
+        setCylinderOS( osi.getCylinderOS() );
+        setCylinderOD( osi.getCylinderOD() );
+        setAxisOS( osi.getAxisOS() );
+        setAxisOD( osi.getAxisOD() );
+        setsurgeryType( osi.getType() );
+    }
+
+    private void toForm(OfficeVisit ov)
+    {
         setPatient( ov.getPatient().getUsername() );
         setHcp( ov.getHcp().getUsername() );
         setDate( ov.getDate().toString() );
@@ -442,6 +484,14 @@ public class OfficeVisitForm implements Serializable {
         this.ldl = ldl;
     }
 
+    public void setsurgeryType ( final OphthalmologySurgeryType type) {
+        this.surgeryType = type;
+    }
+
+    public OphthalmologySurgeryType getsurgeryType () {
+        return surgeryType;
+    }
+
     /**
      * Gets triglycerides level.
      *
@@ -459,6 +509,78 @@ public class OfficeVisitForm implements Serializable {
      */
     public void setTri ( final Integer tri ) {
         this.tri = tri;
+    }
+
+    public void setVisualAcuityOS ( final Long visualAcuityOS ) {
+        this.visualAcuityOS = visualAcuityOS;
+    }
+
+    public Long getVisualAcuityOS () {
+        return visualAcuityOS;
+    }
+
+    public void setVisualAcuityOD ( final Long visualAcuityOD) {
+        this.visualAcuityOD = visualAcuityOD;
+    }
+
+    public Long getVisualAcuityOD () {
+        return visualAcuityOD;
+    }
+
+    public void setSphereOS ( final Double sphereOS ) {
+        this.sphereOS = sphereOS;
+    }
+
+    public Double getSphereOS () {
+        return sphereOS;
+    }
+
+    public void setSphereOD ( final Double sphereOD ) {
+        this.sphereOD = sphereOD;
+    }
+
+    public Double getSphereOD () {
+        return sphereOD;
+    }
+
+    public void setCylinderOS ( final Double cylinderOS ) {
+        this.cylinderOS = cylinderOS;
+    }
+
+    public Double getCylinderOS () {
+        return cylinderOS;
+    }
+
+    public void setCylinderOD ( final Double cylinderOD ) {
+        this.cylinderOD = cylinderOD;
+    }
+
+    public Double getCylinderOD () {
+        return cylinderOD;
+    }
+
+    public void setAxisOS ( final Long axisOS ) {
+        this.axisOS = axisOS;
+    }
+
+    public Long getAxisOS () {
+        return axisOS;
+    }
+
+    public void setAxisOD ( final Long axisOD ) {
+        this.axisOD = axisOD;
+    }
+
+    public Long getAxisOD () {
+        return axisOD;
+    }
+
+    public void setType ( final OphthalmologySurgeryType type) {
+        this.type = type;
+    }
+
+    public OphthalmologySurgeryType getType () {
+        return type;
     }
 
     /**

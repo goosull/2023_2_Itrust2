@@ -84,7 +84,7 @@ public class OphthalmologySurgeryInformation extends DomainObject {
         }
     }
 
-    public void setLong( final Long id ) {
+    public void setId( final Long id ) {
         this.id = id;
     }
 

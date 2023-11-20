@@ -18,17 +18,10 @@ import edu.ncsu.csc.itrust2.services.OphthalmologySurgeryInformationService;
 import edu.ncsu.csc.itrust2.services.UserService;
 import edu.ncsu.csc.itrust2.utils.LoggerUtil;
 
-/**
- * Class that provided the REST endpoints for dealing with diagnoses. Diagnoses
- * can either be retrieved individually by ID, or in lists by office visit or by
- * patient.
- *
- * @author Thomas
- *
- */
+
 @RestController
 @SuppressWarnings ( { "unchecked", "rawtypes" } )
-public class APIOphthalmologySurgeryInformationController extends APIController {
+public class APIOphthalmologySurgeryController extends APIController {
 
     @Autowired
     private LoggerUtil         loggerUtil;
