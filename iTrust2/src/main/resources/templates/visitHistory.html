@@ -45,146 +45,152 @@
                                     <!-- <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td> -->
                                 </tr>
                                 </tbody>
+                                <!-- <tbody>
+                                    <tr name="logTableRow" ng-repeat="l in ctrl.logs">
+                                        <td name="type">a</td>
+                                        <td name="patient">b</td>
+                                        <td name="diagnosis">c</td>
+                                        <td name="date">d</td>
+                                        <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td> 
+                                    </tr>
+                                    </tbody> -->
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- 모달 창 -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+            <!-- 모달 내용 -->
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Ophthalmology Surgery Information</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- visit 객체의 속성을 사용하여 데이터를 표시 -->
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Surgery Date:</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.surgeryEntry" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Visual Acuity Results:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="visualAcuityOD"
+                                    ng-model="visit.visualAcuityOD" required></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="visualAcuityOS"
+                                    ng-model="visit.visualAcuityOS" required></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Sphere:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="sphereOS"
+                                    ng-model="visit.sphereOD" required></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="sphereOS"
+                                    ng-model="visit.sphereOS" required></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Cylinder:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="cylinderOD"
+                                    ng-model="visit.cylinderOD"></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="cylinderOS"
+                                    ng-model="visit.cylinderOS"></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Axis:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="axisOD"
+                                    ng-model="visit.axisOD"></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="axisOS"
+                                    ng-model="visit.axisOS"></input>
+                            </div>
+                        </div>
 
-    <!-- 모달 창 -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
-        <!-- 모달 내용 -->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Ophthalmology Surgery Information</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- visit 객체의 속성을 사용하여 데이터를 표시 -->
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Surgery Date:</label>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Surgery Type:</label>
+                            </div>
+                            <div class="col-xs-6 radio-box">
+                                <div class="form-check">
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="ophthtype in ophthsurgery"><label>
+                                                <input type="radio"
+                                                ng-model="$parent.visit.surgeryType"
+                                                name="surgeryType" value="{{ophthtype}}"
+                                                required="true" /> {{ophthtype}}
+                                        </label></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.surgeryEntry" required />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Visual Acuity Results:</label>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OD:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="visualAcuityOD"
-                                ng-model="visit.visualAcuityOD" required></input>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OS:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="visualAcuityOS"
-                                ng-model="visit.visualAcuityOS" required></input>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Sphere:</label>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OD:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="sphereOS"
-                                ng-model="visit.sphereOD" required></input>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OS:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="sphereOS"
-                                ng-model="visit.sphereOS" required></input>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Cylinder:</label>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OD:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="cylinderOD"
-                                ng-model="visit.cylinderOD"></input>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OS:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="cylinderOS"
-                                ng-model="visit.cylinderOS"></input>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Axis:</label>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OD:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="axisOD"
-                                ng-model="visit.axisOD"></input>
-                        </div>
-                        <div class="col-xs-1">
-                            <span id="helpBlock" class="help-block">OS:</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <input class="form-control" name="axisOS"
-                                ng-model="visit.axisOS"></input>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Surgery Type:</label>
-                        </div>
-                        <div class="col-xs-6 radio-box">
-                            <div class="form-check">
-                                <ul style="list-style: none;">
-                                    <li ng-repeat="ophthtype in ophthsurgery"><label>
-                                            <input type="radio"
-                                            ng-model="$parent.visit.surgeryType"
-                                            name="surgeryType" value="{{ophthtype}}"
-                                            required="true" /> {{ophthtype}}
-                                    </label></li>
-                                </ul>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Notes:</label>
+                                <textarea name="surgeryNotes" ng-model="visit.surgeryNotes"
+                                    class="form-control" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-xs-6">
-                            <label>Notes:</label>
-                            <textarea name="surgeryNotes" ng-model="visit.surgeryNotes"
-                                class="form-control" rows="3"></textarea>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="ctrl.saveChanges()">Save changes</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="ctrl.saveChanges()">Save changes</button>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
         <script>
 
             var App = angular.module('logsApp',['dateTimeServices']);
@@ -204,12 +210,10 @@
                 self.startDate = "";
                 self.endDate   = "";
 
-                self.getUserInfo = function (){
+                self.getUsername = function (){
                     $http.get("/iTrust2/api/v1/curPersonnel", self.requestParams).then(function (response) {
                         // self.userdata = response.data;
                         self.username = response.data.username;
-                        self.jobs = response.data.roles;
-                        console.log(self.jobs);
                         console.log(self.username);
                     });
                 }
@@ -232,7 +236,6 @@
                     });
                 }
                 
-
                 // 수정 모달 열기
                 self.openEditModal = function(log) {
                     // 모달을 열기 전에 로직을 추가할 수 있음
@@ -250,11 +253,10 @@
                     $('#editModal').modal('hide'); // 모달 창을 닫습니다.
                 };
 
-
                 self.updatePageString = function(){
                     self.pageString = "Page: " + self.requestParams.page + " of " + self.numPages;
                 }
-
+                
                 self.nextPage = function(){
                     if(self.requestParams.page >= self.numPages) return;
                     self.requestParams.page++;
