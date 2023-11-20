@@ -44,26 +44,20 @@
 									<caption>My Office Visits:</caption>
 									<thead>
 										<tr>
+											<th>Type</th>
+											<th>Hcp Name</th>
+											<th>Disease Name</th>
 											<th>Date</th>
-											<th>Visual Acuity Results</th>
-											<th>Sphere</th>
-											<th>Cylinder</th>
-											<th>Axis</th>
-                                            <th>Surgery Type</th>
-                                            <th>Notes</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr name="pastTableRow"
 											ng-repeat="p in pastCtrl. | orderBy: 'date'"
 											prescriptionId={{p.id}}>
+											<td name="typeCell">{{p.Type}}</td>
+											<td name="nameCell">{{p.Hcp}}</td>
+											<td name="diseaseCell">{{p.sphereOS, p.sphereOD}}</td>
 											<td name="dateCell">{{p.date | date : 'MM/dd/yyyy'}}</td>
-											<td name="varCell">{{p.visualAcuityOS, p.visualAcuityOD}}</td>
-											<td name="sphereCell">{{p.sphereOS, p.sphereOD}}</td>
-											<td name="cylinderCell">{{p.cylinderOS, p.cylinderOD}}</td>
-											<td name="axisCell">{{p.axisOS, p.axisOD}}</td>
-                                            <td name="typeCell">{{p.type}}</td>
-                                            <td name="noteCell">{{p.visit.note}}</td>
 											<td><button class="btn btn-success btn-edit" style="
 											float: right;
                                         	width: 49.46px; 
