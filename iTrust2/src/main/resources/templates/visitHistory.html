@@ -36,7 +36,7 @@
                                     <td name="patient">{{l.patient.username}}</td>
                                     <td name="disease">{{l.diagnoses[0].note}}</td>
                                     <td name="date">{{l.date | date : 'EEE MMM dd
-                                        h:mm:ss a yyyy'}} <button class="btn btn-success btn-edit" style="
+                                        h:mm:ss a yyyy'}} <button class="btn btn-success btn-edit" ng-click="ctrl.openEditModal(visit)" style="
                                         float: right;
                                         width: 49.46px; 
                                         height: 30.5px; 
@@ -45,98 +45,145 @@
                                     <!-- <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td> -->
                                 </tr>
                                 </tbody>
-                                <!-- <tbody>
-                                    <tr name="logTableRow" ng-repeat="l in ctrl.logs">
-                                        <td name="type">a</td>
-                                        <td name="patient">b</td>
-                                        <td name="diagnosis">c</td>
-                                        <td name="date">d</td>
-                                        <td ng-if="ctrl.isPatient" name="roleCell">{{l.role}}</td> 
-                                    </tr>
-                                    </tbody> -->
                             </table>
-
-                            <br>
-
-                            <!-- container for searching transactions -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading ">Search Logs by Date</div>
-                                        <div class="panel-body">
-                                            <form class="form-horizontal" role="form" name="viewLogForm"
-                                                  ng-submit="ctrl.searchByDate()">
-                                                <br>
-
-                                                <!-- row that contains all interactive fields -->
-                                                <div class="row">
-
-                                                    <!-- start date -->
-                                                    <div class="col-md-5">
-                                                        <label>From:</label>
-                                                        <div class="row">
-                                                            <div class="col-md-7">
-                                                                <input type="date" class="form-control" name="startDate"
-                                                                       ng-model="ctrl.startDate" ng-max="ctrl.endDate"
-                                                                       required />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- end date -->
-                                                    <div class="col-md-5">
-                                                        <label>To:</label>
-                                                        <div class="row">
-                                                            <div class="col-md-7">
-                                                                <input type="date" class="form-control" name="endDate"
-                                                                       ng-model="ctrl.endDate" required />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- submit button -->
-                                                    <div class="col-md-2">
-                                                        <label>Submit:</label>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <button type="submit" class="btn btn-success"
-                                                                        ng-disabled="!viewLogForm.$valid" name="submit">Search
-                                                                    By Date</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- row that contains interactive fields -->
-                                                    <div class="row">
-                                                        <div class="col-md-12"></div>
-                                                    </div>
-
-                                                </div>
-                                            </form>
-
-                                            <br />
-
-
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="row" style="width: 300px; margin: 0 auto;">
-                                        <button class="btn btn-success" style="float: left;"
-                                                ng-click="ctrl.prevPage()">Previous</button>
-                                        <button class="btn btn-success" style="float: right"
-                                                ng-click="ctrl.nextPage()">Next</button>
-                                        <p style="margin: 10 auto; width: 100px; text-align: center;"
-                                           ng-bind="ctrl.pageString">Page: 1</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+    <!-- 모달 창 -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+        <!-- 모달 내용 -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Ophthalmology Surgery Information</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- visit 객체의 속성을 사용하여 데이터를 표시 -->
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Surgery Date:</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.surgeryEntry" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Visual Acuity Results:</label>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OD:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="visualAcuityOD"
+                                ng-model="visit.visualAcuityOD" required></input>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OS:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="visualAcuityOS"
+                                ng-model="visit.visualAcuityOS" required></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Sphere:</label>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OD:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="sphereOS"
+                                ng-model="visit.sphereOD" required></input>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OS:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="sphereOS"
+                                ng-model="visit.sphereOS" required></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Cylinder:</label>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OD:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="cylinderOD"
+                                ng-model="visit.cylinderOD"></input>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OS:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="cylinderOS"
+                                ng-model="visit.cylinderOS"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Axis:</label>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OD:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="axisOD"
+                                ng-model="visit.axisOD"></input>
+                        </div>
+                        <div class="col-xs-1">
+                            <span id="helpBlock" class="help-block">OS:</span>
+                        </div>
+                        <div class="col-xs-2">
+                            <input class="form-control" name="axisOS"
+                                ng-model="visit.axisOS"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Surgery Type:</label>
+                        </div>
+                        <div class="col-xs-6 radio-box">
+                            <div class="form-check">
+                                <ul style="list-style: none;">
+                                    <li ng-repeat="ophthtype in ophthsurgery"><label>
+                                            <input type="radio"
+                                            ng-model="$parent.visit.surgeryType"
+                                            name="surgeryType" value="{{ophthtype}}"
+                                            required="true" /> {{ophthtype}}
+                                    </label></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label>Notes:</label>
+                            <textarea name="surgeryNotes" ng-model="visit.surgeryNotes"
+                                class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.saveChanges()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
         <script>
 
@@ -147,6 +194,7 @@
                 self.logs = [];
                 self.username = "";
                 self.type = "";
+                self.jobs = [];
                 self.hcp = "";
                 self.isPatient = false;
                 self.numPages = 1;
@@ -156,10 +204,12 @@
                 self.startDate = "";
                 self.endDate   = "";
 
-                self.getUsername = function (){
+                self.getUserInfo = function (){
                     $http.get("/iTrust2/api/v1/curPersonnel", self.requestParams).then(function (response) {
                         // self.userdata = response.data;
                         self.username = response.data.username;
+                        self.jobs = response.data.roles;
+                        console.log(self.jobs);
                         console.log(self.username);
                     });
                 }
@@ -181,6 +231,25 @@
                         self.updatePageString();
                     });
                 }
+                
+
+                // 수정 모달 열기
+                self.openEditModal = function(log) {
+                    // 모달을 열기 전에 로직을 추가할 수 있음
+                    // 수정할 데이터 등을 가져오거나 설정할 수 있음
+                    // 예: $scope.editingLog = log;
+
+                    $('#editModal').modal('show'); // Bootstrap 모달 창을 엽니다.
+                };
+
+                // 수정 내용 저장
+                self.saveChanges = function() {
+                    // 수정된 내용을 저장하는 로직을 추가
+                    // 예: 수정된 내용을 서버로 전송하거나 데이터를 업데이트하는 등의 작업 수행
+
+                    $('#editModal').modal('hide'); // 모달 창을 닫습니다.
+                };
+
 
                 self.updatePageString = function(){
                     self.pageString = "Page: " + self.requestParams.page + " of " + self.numPages;
