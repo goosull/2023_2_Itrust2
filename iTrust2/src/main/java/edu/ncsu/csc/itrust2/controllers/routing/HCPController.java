@@ -92,5 +92,18 @@ public class HCPController {
     public String documentOfficeVisit ( final Model model ) {
         return "/hcp/documentOfficeVisit";
     }
+    
+    /**
+     * Returns the page for a HCP to view their invoices
+     *
+     * @param model
+     *            The data for the front end
+     * @return Page to display to the user
+     */
+    @GetMapping ( "/hcp/viewInvoices" )
+    @PreAuthorize ( "hasRole('ROLE_HCP')" )
+    public String viewInvoices ( final Model model ) {
+        return "/hcp/viewInvoices";
+    }
 
 }

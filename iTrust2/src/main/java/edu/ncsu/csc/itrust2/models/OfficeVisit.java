@@ -114,6 +114,10 @@ public class OfficeVisit extends DomainObject {
     @JsonManagedReference
     private List<Prescription> prescriptions;
 
+    @OneToMany ( cascade = CascadeType.ALL )
+    @JsonManagedReference
+    private List<Invoice> invoices;
+    
     /** For Hibernate/Thymeleaf _must_ be an empty constructor */
     public OfficeVisit () {
     }
@@ -382,5 +386,12 @@ public class OfficeVisit extends DomainObject {
     public List<Prescription> getPrescriptions () {
         return prescriptions;
     }
-
+    
+    public void setInvoices ( final List<Invoice> invoices ) {
+        this.invoices = invoices;
+    }
+    
+    public List<Invoice> getInvoices () {
+        return invoices;
+    }
 }

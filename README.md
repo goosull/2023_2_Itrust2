@@ -2,17 +2,17 @@
 
 ## Members
 
-| Student ID | Name   | GitLab Username | Contact               | Experience              |
-| ---------- | ------ | --------------- | --------------------- | ----------------------- |
-| 2022148004 | 이협   | dlguq0107       | dlguq0107@yonsei.ac.kr | BE(java)               |
-| 2018122053 | 노우준 | 2018122053      | woojunro@yonsei.ac.kr | FE(ReactJS), BE(NodeJS) |
-| 2022148047 | 최우현 | starwh          | starwh03@yonsei.ac.kr | BE(java)                |
-| 2021147562 | 김이주 | 2021147562      | kim2ju@yonsei.ac.kr   | BE(java)                |
-| 2022148082 | 김승원 | goosull         | 2060won@naver.com     | BE(java)                |
-| 2018122018 | 박태주 | taejoo          | qkrxown5985@gmail.com | BE(java)                |
+| Student ID | Name   | GitLab Username | Contact                | Experience              |
+| ---------- | ------ | --------------- | ---------------------- | ----------------------- |
+| 2022148004 | 이협   | dlguq0107       | dlguq0107@yonsei.ac.kr | BE(java)                |
+| 2018122053 | 노우준 | 2018122053      | woojunro@yonsei.ac.kr  | FE(ReactJS), BE(NodeJS) |
+| 2022148047 | 최우현 | starwh          | starwh03@yonsei.ac.kr  | BE(java)                |
+| 2021147562 | 김이주 | 2021147562      | kim2ju@yonsei.ac.kr    | BE(java)                |
+| 2022148082 | 김승원 | goosull         | 2060won@naver.com      | BE(java)                |
+| 2018122018 | 박태주 | taejoo          | qkrxown5985@gmail.com  | BE(java)                |
 | 2021123062 | 유광수 | YuKwangsu       | yuokok813813@gmail.com | FE(VanillaJS), BE(java) |
 | 2021182012 | 손예원 | SonYewon        | ssonyewon@yonsei.ac.kr | BE(java)                |
-| 2018122021 | 최병준 | ByungJune       | bottle6c@yonsei.ac.kr | FE(VueJS), BE(NodeJS)   |
+| 2018122021 | 최병준 | ByungJune       | bottle6c@yonsei.ac.kr  | FE(VueJS), BE(NodeJS)   |
 
 ## Roles
 
@@ -47,7 +47,8 @@
 
 - [User Story](docs/user-story.md)
 
-## Presentations
+## Iteration Progress
 
+- [Notion](https://guttural-stinger-5d4.notion.site/Iteration-1-eac9d5b126b64924b2bb357b259b7846?pvs=4)
 - [Iteration 1](docs/iteration1.md)
-- [Iteration 1 Notion](https://guttural-stinger-5d4.notion.site/Iteration-1-eac9d5b126b64924b2bb357b259b7846?pvs=4)
+- [Iteration 2](docs/iteration2.md)
