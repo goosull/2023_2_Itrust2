@@ -161,32 +161,4 @@ public class APIOfficeVisitController extends APIController {
                     HttpStatus.BAD_REQUEST );
         }
     }
-
-    @PostMapping ( BASE_PATH + "/officevisits/ophtsur" )
-    @PreAuthorize ( "hasRole('ROLE_HCP')" )
-    public ResponseEntity createOphthalmologySurgeryOfficeVisit ( @RequestBody final OfficeVisitForm visitForm ) {
-        try {
-            final OphthalmologySurgeryInformation surgery = OphthalmologySurgeryInformationService.build( visitForm );
-            final OfficeVisit visit = surgery.getVisit();
-
-            if ( null != visit.getId() && officeVisitService.existsById( visit.getId() ) ) {
-                return new ResponseEntity(
-                        errorResponse( "Office visit with the id " + visit.getId() + " already exists" ),
-                        HttpStatus.CONFLICT );
-            }
-            officeVisitService.save( visit );
-            loggerUtil.log( TransactionType.GENERAL_CHECKUP_CREATE, LoggerUtil.currentUser(),
-                    visit.getPatient().getUsername() );
-            return new ResponseEntity( visit, HttpStatus.OK );
-
-        }
-        catch ( final Exception e ) {
-            e.printStackTrace();
-            return new ResponseEntity(
-                    errorResponse( "Could not validate or save the OfficeVisit provided due to " + e.getMessage() ),
-                    HttpStatus.BAD_REQUEST );
-        }
-    }
-
-
 }

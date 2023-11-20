@@ -115,7 +115,7 @@ public class OfficeVisit extends DomainObject {
     private List<Prescription> prescriptions;
 
     @OneToOne
-    @JsonManagedReference
+    @JoinColumn ( name = "opht_surgery_id" )
     private OphthalmologySurgeryInformation ophtSurgery;
 
     /** For Hibernate/Thymeleaf _must_ be an empty constructor */
@@ -387,4 +387,11 @@ public class OfficeVisit extends DomainObject {
         return prescriptions;
     }
 
+    public void setOphthalmologySurgeryInformation ( final OphthalmologySurgeryInformation surgery ) {
+        this.ophtSurgery = surgery;
+    }
+
+    public OphthalmologySurgeryInformation getOphthalmologySurgeryInformation () {
+        return ophtSurgery;
+    }
 }
