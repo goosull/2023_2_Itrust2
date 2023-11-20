@@ -68,8 +68,7 @@ public class OfficeVisitForm implements Serializable {
     @NotEmpty
     private String                 type;
 
-    private OphthalmologySurgeryType surgeryType;
-
+    
     /**
      * Hospital where the OfficeVisit occurred
      */
@@ -98,13 +97,13 @@ public class OfficeVisitForm implements Serializable {
      * decimal precision. > 0
      */
     private Float                  weight;
-
+    
     /**
      * Head circumference of the person. Up to a 3-digit number and potentially
      * one digit of decimal precision. > 0
      */
     private Float                  headCircumference;
-
+    
     /**
      * Systolic blood pressure. 3-digit positive number.
      */
@@ -148,13 +147,13 @@ public class OfficeVisitForm implements Serializable {
     private List<PrescriptionForm> prescriptions;
 
     private Long    visualAcuityOS;
-
+    
     private Long    visualAcuityOD;
 
     private Double  sphereOS;
-
+    
     private Double  sphereOD;
-
+    
     private Double  cylinderOS;
 
     private Double  cylinderOD;
@@ -162,6 +161,12 @@ public class OfficeVisitForm implements Serializable {
     private Long    axisOS;
 
     private Long    axisOD;
+    
+    private String surgeryType;
+
+    @Length ( max = 250 )
+    private String surgeryNotes;
+
 
     /**
      * Creates an OfficeVisitForm from the OfficeVisit provided
@@ -170,25 +175,6 @@ public class OfficeVisitForm implements Serializable {
      *            OfficeVisit to turn into an OfficeVisitForm
      */
     public OfficeVisitForm ( final OfficeVisit ov ) {
-        toForm(ov);
-    }
-
-    public OfficeVisitForm ( final OphthalmologySurgeryInformation osi ){
-        toForm(osi.getVisit());
-
-        setVisualAcuityOS( osi.getVisualAcuityOS() );
-        setVisualAcuityOD( osi.getVisualAcuityOD() );
-        setSphereOS( osi.getSphereOS() );
-        setSphereOD( osi.getSphereOD() );
-        setCylinderOS( osi.getCylinderOS() );
-        setCylinderOD( osi.getCylinderOD() );
-        setAxisOS( osi.getAxisOS() );
-        setAxisOD( osi.getAxisOD() );
-        setsurgeryType( osi.getType() );
-    }
-
-    private void toForm(OfficeVisit ov)
-    {
         setPatient( ov.getPatient().getUsername() );
         setHcp( ov.getHcp().getUsername() );
         setDate( ov.getDate().toString() );
@@ -280,7 +266,7 @@ public class OfficeVisitForm implements Serializable {
      *
      * @return Type of the visit
      */
-    public String getType () {
+    public String getType() {
         return this.type;
     }
 
@@ -484,14 +470,6 @@ public class OfficeVisitForm implements Serializable {
         this.ldl = ldl;
     }
 
-    public void setsurgeryType ( final OphthalmologySurgeryType type) {
-        this.surgeryType = type;
-    }
-
-    public OphthalmologySurgeryType getsurgeryType () {
-        return surgeryType;
-    }
-
     /**
      * Gets triglycerides level.
      *
@@ -575,12 +553,20 @@ public class OfficeVisitForm implements Serializable {
         return axisOD;
     }
 
-    public void setType ( final OphthalmologySurgeryType type) {
-        this.type = type;
+    public void setSurgeryType ( final String surgeryType ) {
+        this.surgeryType = surgeryType;
     }
 
-    public OphthalmologySurgeryType getType () {
-        return type;
+    public String getSurgeryType () {
+        return surgeryType;
+    }
+
+    public void setSurgeryNotes ( final String surgeryNotes ) {
+        this.surgeryNotes = surgeryNotes;
+    }
+
+    public String getSurgeryNotes () {
+        return surgeryNotes;
     }
 
     /**

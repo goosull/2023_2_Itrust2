@@ -114,6 +114,10 @@ public class OfficeVisit extends DomainObject {
     @JsonManagedReference
     private List<Prescription> prescriptions;
 
+    @OneToOne
+    @JsonManagedReference
+    private OphthalmologySurgeryInformation ophtSurgery;
+
     /** For Hibernate/Thymeleaf _must_ be an empty constructor */
     public OfficeVisit () {
     }
