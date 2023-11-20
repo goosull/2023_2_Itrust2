@@ -16,6 +16,7 @@ import edu.ncsu.csc.itrust2.forms.PrescriptionForm;
 import edu.ncsu.csc.itrust2.models.AppointmentRequest;
 import edu.ncsu.csc.itrust2.models.Diagnosis;
 import edu.ncsu.csc.itrust2.models.OfficeVisit;
+import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.Patient;
 import edu.ncsu.csc.itrust2.models.User;
 import edu.ncsu.csc.itrust2.models.enums.AppointmentType;
@@ -45,6 +46,9 @@ public class OfficeVisitService extends Service {
 
     @Autowired
     private DiagnosisService          diagnosisService;
+
+    @Autowired
+    private OphthalmologySurgeryInformationService ophthalmologySurgeryInformationService;
 
     @Override
     protected JpaRepository getRepository () {
@@ -151,6 +155,11 @@ public class OfficeVisitService extends Service {
         }
         else {
             ov.validate12AndOver();
+        }
+
+        if ( ov.getType() == AppointmentType.OPHTHALMOLOGY_SURGERY) {
+            OphthalmologySurgeryInformation surgery = ophthalmologySurgeryInformationService.build( ovf ); 
+            ov.setOphthalmologySurgeryInformation( surgery );
         }
 
         return ov;

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,12 +30,16 @@ public class OphthalmologySurgeryInformation extends DomainObject {
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO )
     private Long            id;
-    
+
     @NotNull
-    @OneToOne
-    @JoinColumn ( name = "visit_id", nullable = false )
-    @JsonBackReference
-    private OfficeVisit     visit;
+    @ManyToOne
+    @JoinColumn ( name = "patient_id", columnDefinition = "varchar(100)" )
+    private User            patient;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn ( name = "hcp_id", columnDefinition = "varchar(100)" )
+    private User            hcp;
 
     @NotNull
     @Basic
@@ -92,13 +97,21 @@ public class OphthalmologySurgeryInformation extends DomainObject {
     public Long getId () {
         return id;
     }
-    
-    public void setVisit ( final OfficeVisit visit ) {
-        this.visit = visit;
+
+    public User getPatient () {
+        return patient;
     }
 
-    public OfficeVisit getVisit () {
-        return visit;
+    public void setPatient ( final User patient ) {
+        this.patient = patient;
+    }
+
+    public User getHcp () {
+        return hcp;
+    }
+
+    public void setHcp ( final User hcp ) {
+        this.hcp = hcp;
     }
 
     public void setDate ( final ZonedDateTime date ) {

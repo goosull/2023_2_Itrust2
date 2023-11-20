@@ -379,7 +379,7 @@
 							if ($scope.errorMsg == "") {
                                 $http({
                                     method: 'POST',
-                                    url: '/iTrust2/api/v1/officevisits/ophtsur',
+                                    url: '/iTrust2/api/v1/officevisits',
                                     data: $scope.visit
                                 }).then(function (response) {
                                     $scope.errorMsg = "";
@@ -388,7 +388,6 @@
                                     $scope.message = "";
                                     $scope.errorMsg = "Error occurred creating office visit";
                                 })
-
 							}
 						} else {
                             $scope.message = "";
