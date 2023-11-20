@@ -75,7 +75,7 @@ public class OphthalmologySurgeryInformationService extends Service {
         osi.setVisit(service.build(ovf));
         osi.setVisualAcuityOD(ovf.getVisualAcuityOD());
         osi.setVisualAcuityOS(ovf.getVisualAcuityOS());
-
+        osi.vaildate();
 
         return osi;
     }
