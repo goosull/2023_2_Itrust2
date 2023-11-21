@@ -194,31 +194,28 @@
 														</tr>
 													</tbody>
 												</table>
-																								
-												<div class="col-xs-6">
-													<label>prescription:</label>
-												</div>
 												
 												<table class="table table-bordered" name="prescription_table">
-
-													<!-- table column headers -->
+													<caption>Prescriptions:</caption>
 													<thead>
 														<tr>
-															<th>dosage</th>
-															<th>end_date</th>
-															<th>renewals</th>
-															<th>start_date</th>
-															<th>drug_id</th>
+															<th>Drug</th>
+															<th>Dosage (mg)</th>
+															<th>Start Date</th>
+															<th>End Date</th>
+															<th>Renewals</th>
 														</tr>
 													</thead>
-					
 													<tbody>
-														<tr name="prescriptionTableRow" ng-repeat="e in ehr[7]">
-															<td name="dosage">{{e.dosage}}</td>
-															<td name="end_date">{{e.endDate}}</td>
-															<td name="renewals">{{e.renewals}}</td>
-															<td name="start_date">{{e.startDate}}</td>
-															<td name="drug_id">{{e.drug.name}}</td>
+														<tr name="prescriptionTableRow"
+															ng-repeat="p in ehr[7]"
+															prescriptionId={{p.id}}>
+															<td name="drugCell">{{p.drug.name}}</td>
+															<td name="codeCell">{{p.dosage}}</td>
+															<td name="startCell">{{p.startDate | date :
+																'MM/dd/yyyy'}}</td>
+															<td name="endCell">{{p.endDate | date : 'MM/dd/yyyy'}}</td>
+															<td name="renewalsCell">{{p.renewals}}</td>
 														</tr>
 													</tbody>
 												</table>
