@@ -114,16 +114,16 @@ a {
 					if (!(role.includes('HCP') || role.includes('OD') || role.includes('OPH') || role.includes('VIROLOGIST'))) {
 						navbarparent.removeChild(hcpdropdown);
 					}
-					if (!role.includes('VIROLOGIST')) {
-						navbarparent.removeChild(virologistdropdown);
-					}
 					if (!role.includes('ER')) {
 						navbarparent.removeChild(erdropdown);
+					}
+					if (!role.includes('VIROLOGIST')) {
+						navbarparent.removeChild(virologistdropdown);
 					}
 					if (!role.includes('LABTECH')) {
 						navbarparent.removeChild(ltdropdown);
 					}
-
+					
 				});
 			/* Otherwise Thymeleaf tries to parse Javascript as XML and breaks itself sometimes.  Sigh */
 			/*<![CDATA[*/
@@ -187,7 +187,6 @@ a {
 								id="editPrescriptions-personnel">Edit Prescriptions</a></li>
 						</ul></li>
 				</ul>
-				
 
 				<!-- Patient dropdown -->
 				<ul id="patient-dropdown" class="nav navbar-nav">
@@ -217,17 +216,17 @@ a {
 								id="editdemographics-patient">Edit Demographics</a></li>
 						</ul></li>
 				</ul>
-
+				
 				<!-- ER dropdown -->
 				<ul id="er-dropdown" class="nav navbar-nav">
 					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#" id="hcpPatientDropDown">Patient<span class="caret"></span></a>
+						data-toggle="dropdown" href="#" id="erPatientDropDown">Patient<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="/iTrust2/er/viewEHR"
 								id="viewEHR-er">Emergency Health Records</a></li>
 						</ul></li>
 				</ul>
-
+				
 				<ul id="extra-dropdown" class="nav navbar-nav">
 					<li><a
 						href="https://github.ncsu.edu/engr-csc326-staff/iTrust2-v8/wiki">About</a></li>
