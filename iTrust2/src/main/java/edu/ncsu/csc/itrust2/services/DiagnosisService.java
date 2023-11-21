@@ -62,7 +62,7 @@ public class DiagnosisService extends Service {
     	        .collect( Collectors.toList() );
     	
         List<Diagnosis> diagnosisLast60Days = diagnosis.stream()
-                .filter(e -> e.getVisit().getDate().isAfter(startDate))
+                .filter(e -> e.getVisit().getDate().isAfter(startDate) || e.getVisit().getDate().isEqual(startDate))
                 .collect(Collectors.toList());
 
         diagnosisLast60Days.sort((p1, p2) -> p2.getVisit().getDate().compareTo(p1.getVisit().getDate()));
