@@ -12,12 +12,13 @@
       /* Otherwise Thymeleaf tries to parse Javascript as XML and breaks itself sometimes.  Sigh */
       /*<![CDATA[*/
       var app = angular.module("pastApp", []);
-
+	  
       app.controller('pastCtrl', function ($scope, $http) {
         $scope.pasts = [];
         $scope.pattern = /^\d{4}-\d{4}-\d{2}$/;
+
         $scope.loadTable = function () {
-          $http.get("/iTrust2/api/v1/past").then(
+          $http.get("/iTrust2/api/v1/officevisits/myofficevisits").then(
             function (response) {
               $scope.pasts = response.data;
               $scope.message = "";
@@ -26,8 +27,12 @@
               $scope.message = "Could not display Past Office Visit";
             });
         }
+		
         $scope.loadTable();
       });
+	  function openPopup(message) {
+      		alert(message.);
+    	}
 			/*]]>*/
     </script>
 
@@ -52,17 +57,19 @@
 									</thead>
 									<tbody>
 										<tr name="pastTableRow"
-											ng-repeat="p in pastCtrl. | orderBy: 'date'"
+											ng-repeat="p in pasts | orderBy: 'date'"
 											prescriptionId={{p.id}}>
-											<td name="typeCell">{{p.Type}}</td>
-											<td name="nameCell">{{p.Hcp}}</td>
-											<td name="diseaseCell">{{p.sphereOS, p.sphereOD}}</td>
+											<td name="typeCell">{{p.type}}</td>
+											<td name="nameCell">{{p.hcp.username}}</td>
+											<td name="diseaseCell">{{p.diagnoses[0].note}}</td>
 											<td name="dateCell">{{p.date | date : 'MM/dd/yyyy'}}</td>
-											<td><button class="btn btn-success btn-edit" style="
-											float: right;
-                                        	width: 49.46px; 
-                                        	height: 30.5px; 
-                                        	">View Surgery</button></td>
+											<td name="date">{{p.date | date : 'EEE MMM dd
+												h:mm:ss a yyyy'}} <button class="btn btn-success btn-edit" ng-click="ctrl.openEditModal(visit)" style="
+												float: right;
+												width: 49.46px; 
+												height: 30.5px; 
+												">Edit</button>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -72,6 +79,7 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
 </body>
 
