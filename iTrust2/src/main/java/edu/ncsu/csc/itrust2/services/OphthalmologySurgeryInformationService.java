@@ -2,6 +2,8 @@ package edu.ncsu.csc.itrust2.services;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import edu.ncsu.csc.itrust2.forms.OfficeVisitForm;
+import edu.ncsu.csc.itrust2.forms.OphthalmologySurgeryForm;
 import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.User;
 import edu.ncsu.csc.itrust2.models.enums.OphthalmologySurgeryType;
@@ -36,10 +39,13 @@ public class OphthalmologySurgeryInformationService extends Service {
     public List<OphthalmologySurgeryInformation> findByHcp ( final User hcp ) {
         return repository.findByHcp( hcp );
     }
-
-
+    
     public List<OphthalmologySurgeryInformation> findByHcpAndPatient ( final User hcp, final User patient ) {
         return repository.findByHcpAndPatient( hcp, patient );
+    }
+
+    public Optional<OphthalmologySurgeryInformation> findById ( final Long id ) {
+        return repository.findById( id );
     }
     
     public OphthalmologySurgeryInformation build ( final OfficeVisitForm ovf ) {
@@ -53,7 +59,7 @@ public class OphthalmologySurgeryInformationService extends Service {
         osi.setCylinderOD(ovf.getCylinderOD());
         osi.setCylinderOS(ovf.getCylinderOS());
 
-        final ZonedDateTime visitDate = ZonedDateTime.parse( ovf.getDate() );
+        final ZonedDateTime visitDate = ZonedDateTime.parse( ovf.getSurgeryEntry() );
         osi.setDate(visitDate);
         
         osi.setNotes(ovf.getSurgeryNotes());
@@ -71,7 +77,7 @@ public class OphthalmologySurgeryInformationService extends Service {
 
         osi.setVisualAcuityOD(ovf.getVisualAcuityOD());
         osi.setVisualAcuityOS(ovf.getVisualAcuityOS());
-        osi.vaildate();
+        osi.validate();
 
         return osi;
     }

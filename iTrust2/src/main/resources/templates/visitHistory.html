@@ -69,7 +69,7 @@
                                 <label>Surgery Date:</label>
                             </div>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.surgeryEntry" required />
+                                <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.date" required />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -158,7 +158,7 @@
                                     <ul style="list-style: none;">
                                         <li ng-repeat="ophthtype in ophthsurgery"><label>
                                                 <input type="radio"
-                                                ng-model="$parent.visit.surgeryType"
+                                                ng-model="$parent.visit.type"
                                                 name="surgeryType" value="{{ophthtype}}"
                                                 required="true" /> {{ophthtype}}
                                         </label></li>
@@ -169,7 +169,7 @@
                         <div class="form-group row">
                             <div class="col-xs-6">
                                 <label>Notes:</label>
-                                <textarea name="surgeryNotes" ng-model="visit.surgeryNotes"
+                                <textarea name="surgeryNotes" ng-model="visit.notes"
                                     class="form-control" rows="3"></textarea>
                             </div>
                         </div>
@@ -201,7 +201,9 @@
                         console.log(self.username);
                     });
                 }
+                
 
+                /*추후 수정 바람*/
                 self.updateTable = function() {
                     $http.get("/iTrust2/api/v1/officevisits", self.requestParams).then(function (response) {
                         self.logs = response.data;
@@ -224,20 +226,10 @@
                 self.openEditModal = function(log) {
                 // 모달을 열기 전에 수정할 데이터를 visit 객체에 설정합니다.
                     $scope.visit = log.ophthalmologySurgeryInformation;
-                    // console.log(log);
-                    // $scope.visit.surgeryEntry = log.ophthalmologySurgeryInformation.date;
-                    // $scope.visit.surgeryEntry = log.date;
-                    $scope.visit.surgeryEntry = new Date(log.ophthalmologySurgeryInformation.date);
-                    $scope.visit.visualAcuityOD = log.ophthalmologySurgeryInformation.visualAcuityOD;
-                    $scope.visit.visualAcuityOS = log.ophthalmologySurgeryInformation.visualAcuityOS;
-                    $scope.visit.sphereOD  = log.ophthalmologySurgeryInformation.sphereOD;
-                    $scope.visit.sphereOS  = log.ophthalmologySurgeryInformation.sphereOS;
-                    $scope.visit.cylinderOD = log.ophthalmologySurgeryInformation.cylinderOD;
-                    $scope.visit.cylinderOS = log.ophthalmologySurgeryInformation.cylinderOS;
-                    $scope.visit.axisOD = log.ophthalmologySurgeryInformation.axisOD;
-                    $scope.visit.axisOS = log.ophthalmologySurgeryInformation.axisOS;
-                    $scope.visit.surgeryType  = log.ophthalmologySurgeryInformation.type;
-                    $scope.visit.surgeryNotes  = log.ophthalmologySurgeryInformation.notes;
+                    $scope.visit.date = new Date($scope.visit.date);
+                    $scope.visit.patient = $scope.visit.patient.username;
+                    $scope.visit.hcp = $scope.visit.hcp.username;
+                    console.log($scope.visit);
                     $('#editModal').modal('show'); // Bootstrap 모달 창을 엽니다.
                 };
 
@@ -245,8 +237,9 @@
 
                     // console.log(dataToSend)
                     checkEyeHealthMetrics();
-                    $http.put("/iTrust2/api/v1/officevisits/"
-                        + self.logs[0].id, $scope.visit).then(
+                    console.log($scope.visit.id);
+                    $http.put("/iTrust2/api/v1/ophtsurgery/"
+                        + $scope.visit.id, $scope.visit).then(
                         function(response) {
                             $scope.message = "Your demographics were updated successfully."
                         }, function(rejection) {

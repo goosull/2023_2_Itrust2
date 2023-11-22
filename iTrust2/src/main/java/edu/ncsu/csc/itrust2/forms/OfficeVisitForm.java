@@ -146,6 +146,8 @@ public class OfficeVisitForm implements Serializable {
 
     private List<PrescriptionForm> prescriptions;
 
+    private String surgeryEntry;
+
     private Long    visualAcuityOS;
     
     private Long    visualAcuityOD;
@@ -487,6 +489,14 @@ public class OfficeVisitForm implements Serializable {
      */
     public void setTri ( final Integer tri ) {
         this.tri = tri;
+    }
+
+    public void setSurgeryEntry ( final String surgeryEntry) {
+        this.surgeryEntry = surgeryEntry;
+    }
+
+    public String getSurgeryEntry () {
+        return surgeryEntry;
     }
 
     public void setVisualAcuityOS ( final Long visualAcuityOS ) {

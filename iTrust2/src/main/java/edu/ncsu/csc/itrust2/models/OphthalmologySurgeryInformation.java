@@ -68,14 +68,14 @@ public class OphthalmologySurgeryInformation extends DomainObject {
 
     private Long    axisOD;
 
-    //@NotNull
+    @NotNull
     @Enumerated ( EnumType.STRING )
     private OphthalmologySurgeryType    type;
 
     private String      notes;
 
 
-    public void vaildate () {
+    public void validate () {
         if ( cylinderOS == null && cylinderOD == null ) {
             if ( axisOS != null || axisOD != null ) {
                 throw new IllegalArgumentException( "the axis fields must be empty");
