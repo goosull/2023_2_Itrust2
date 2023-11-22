@@ -69,7 +69,7 @@
                                 <label>Surgery Date:</label>
                             </div>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.surgeryEntry | date:'yyyy-MM-dd'" required />
+                                <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.surgeryEntry" required />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -192,9 +192,6 @@
                 self.type = "";
                 self.jobs = [];
                 self.hcp = "";
-                    
-                self.surgeryType = ["CATARACT", "LASER", "REFRACTIVE"];
-
 
                 self.getUsername = function (){
                     $http.get("/iTrust2/api/v1/curPersonnel", self.requestParams).then(function (response) {
@@ -226,11 +223,21 @@
                 // 수정 모달 열기
                 self.openEditModal = function(log) {
                 // 모달을 열기 전에 수정할 데이터를 visit 객체에 설정합니다.
-                    $scope.visit = log;
-                    console.log(log);
-                    $scope.visit.surgeryEntry = log.ophthalmologySurgeryInformation.date;
-                    
-
+                    $scope.visit = log.ophthalmologySurgeryInformation;
+                    // console.log(log);
+                    // $scope.visit.surgeryEntry = log.ophthalmologySurgeryInformation.date;
+                    // $scope.visit.surgeryEntry = log.date;
+                    $scope.visit.surgeryEntry = new Date(log.ophthalmologySurgeryInformation.date);
+                    $scope.visit.visualAcuityOD = log.ophthalmologySurgeryInformation.visualAcuityOD;
+                    $scope.visit.visualAcuityOS = log.ophthalmologySurgeryInformation.visualAcuityOS;
+                    $scope.visit.sphereOD  = log.ophthalmologySurgeryInformation.sphereOD;
+                    $scope.visit.sphereOS  = log.ophthalmologySurgeryInformation.sphereOS;
+                    $scope.visit.cylinderOD = log.ophthalmologySurgeryInformation.cylinderOD;
+                    $scope.visit.cylinderOS = log.ophthalmologySurgeryInformation.cylinderOS;
+                    $scope.visit.axisOD = log.ophthalmologySurgeryInformation.axisOD;
+                    $scope.visit.axisOS = log.ophthalmologySurgeryInformation.axisOS;
+                    $scope.visit.surgeryType  = log.ophthalmologySurgeryInformation.type;
+                    $scope.visit.surgeryNotes  = log.ophthalmologySurgeryInformation.notes;
                     $('#editModal').modal('show'); // Bootstrap 모달 창을 엽니다.
                 };
 
