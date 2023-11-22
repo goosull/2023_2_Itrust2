@@ -1,5 +1,7 @@
 package edu.ncsu.csc.itrust2.models.enums;
 
+import edu.ncsu.csc.itrust2.models.Patient;
+
 /**
  * A TransactionType represents an event that took place in the system and that
  * is to be logged. This is used to provide a code that can easily be saved in
@@ -442,7 +444,14 @@ public enum TransactionType {
     /**
      * HCP edits basic health metrics
      */
-    OPHTHALMOLOGY_SURGERY_EDIT ( 2202, "HCP edits basic health metrics", true ),
+    
+    SURGERY_OPHTHALMOLOGIST_CREATE ( 2202, "Ophthalmologist adds surgery", true ),
+
+    SURGERY_OPHTHALMOLOGIST_EDIT ( 2203, "Ophthalmologist edits surgery", true ),
+    
+    SURGERY_OPHTHALMOLOGIST_VIEW ( 2204, "Ophthalmologist views surgery", true ),
+    
+    SURGERY_PATIENT_VIEW ( 2205, "Patient views surgery", true ),
     /**
      * Patient views basic health metrics for an ophthalmology surgery
      */
