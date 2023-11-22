@@ -94,5 +94,18 @@ public class PatientController {
     public String viewDiagnoses ( final Model model ) {
         return "/patient/officeVisit/viewDiagnoses";
     }
-
+    
+    
+    /**
+     * Create a page for the patient to view all invoices
+     *
+     * @param model
+     *            data for front end
+     * @return The page for the patient to view their invoices
+     */
+    @GetMapping ( value = "patient/officeVisit/viewInvoices" )
+    @PreAuthorize ( "hasRole('ROLE_PATIENT')" )
+    public String viewInvoices ( final Model model ) {
+        return "/patient/officeVisit/viewInvoices";
+    }
 }

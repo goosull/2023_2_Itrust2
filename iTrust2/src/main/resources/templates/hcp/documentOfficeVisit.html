@@ -75,6 +75,17 @@
                         }
                         return err.join(". ");
                     }
+                    
+                    var checkValidInvoice = function (p) {
+						var err = [];
+						if (!/^\+?\d+$/.test(p.cost)) {
+                            err.push("Cost must be a positive integer");
+                        }
+                        if (!dateTimeService.isValidDate(p.dueDate)) {
+                            err.push("Due date is in an invalid format");
+                        }
+						return err.join(". ");
+					}
 
                     $scope.three = false;
                     $scope.threeAndUp = false;
@@ -361,6 +372,13 @@
 
                                 $scope.visit.labProcedures = $scope.procedures;
                                 
+                                $scope.visit.invoices = $scope.invoices;
+                                $scope.visit.invoices.forEach(function (p) {
+                                    p.patient = $scope.visit.patient;
+                                    p.hcp = $scope.visit.hcp;
+                                    p.status = 0;
+                                });
+                                
                                 $http({
                                     method: 'POST',
                                     url: '/iTrust2/api/v1/officevisits',
@@ -404,13 +422,17 @@
                     $scope.startEntry = "";
                     $scope.endEntry = "";
                     $scope.renewalEntry = "";
-
+				
+					$scope.costEntry = "";
+                    $scope.duedateEntry = "";
+					
                     $scope.loincEntry = "";
                     $scope.priorityEntry = "";
                     $scope.techEntry = "";
 
                     $scope.procedure = {};
                     $scope.procedures = [];
+                    $scope.invoices = [];
 
                     // Clears local variables for diagnosis form
                     function resetDiagnosisForm() {
@@ -426,6 +448,13 @@
                         $scope.endEntry = "";
                         $scope.renewalEntry = "";
                     }
+                    
+                    // Clears local variables for cost form
+                    function resetInvoiceForm() {
+                        $scope.costEntry = "";
+                        $scope.duedateEntry = "";
+                    }
+                    
 
                     // Capture each diagnosis into an array
                     $scope.diagnoses = [];
@@ -494,6 +523,25 @@
                             $scope.message = "Lab procedure added successfully";
                         }
                     }
+                    
+                    //Adding a invoice to office visit
+                    $scope.addInvoice = function () {
+                        $scope.errorMsg = "";
+                        var p = {
+                            cost: $scope.costEntry,
+                            dueDate: $scope.duedateEntry,
+                        }
+                        
+                        var err = checkValidInvoice(p);
+                        if (err) {
+                            $scope.errorMsg = err;
+                            $scope.message = "";
+                        } else {
+                            p.dueDate = dateTimeService.toDateString(p.dueDate);
+                            $scope.invoices.push(p);
+                            resetInvoiceForm();
+                        }
+                    }
 
                     //remove local diagnosis from list
                     $scope.removeDiagnosis = function ($index) {
@@ -509,10 +557,16 @@
                     $scope.removeProcedure = function ($index) {
                         $scope.procedures.splice($index, 1);
                     }
-
+					
+					//remove local invoice from list
+                    $scope.removeInvoice = function ($index) {
+                        $scope.invoices.splice($index, 1);
+                    }
+                    
                     //call initally
                     resetDiagnosisForm();
                     resetPrescriptionForm();
+                    resetInvoiceForm();
                 });
 			/*]]>*/
             </script>
@@ -1107,6 +1161,70 @@
 										</div>
 									</div>
 								</div>
+								
+								<!-- Invoice Panel -->
+								<div ng-show="visit.type == 'GENERAL_CHECKUP'" class="row">
+									<div class="col-md-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Invoice</h4>
+											</div>
+											<div class="panel-body">
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Cost:</label>
+													</div>
+													<div class="col-xs-4">
+														<input class="form-control" name="costEntry"
+															ng-model="costEntry" required></input>
+													</div>
+													<div class="col-xs-2">
+														<span id="helpBlock" class="help-block">dollars</span>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Due Date:</label>
+													</div>
+													<div class="col-xs-6">
+														<input type="date" class="form-control" name="duedateEntry"
+															ng-model="duedateEntry" required />
+													</div>
+												</div>
+												<div class="form-group row text-center">
+													<button class="btn btn-success"
+														ng-click="addInvoice()" name="addInvoice">Add
+														Invoice</button>
+												</div>
+												<div class="form-group row">
+													<div class="col-md-12">
+														<div class="panel panel-default">
+															<div class="panel-heading">Added Invoice</div>
+															<div class="panel-body">
+																<div class="row" ng-repeat="p in invoices">
+																	<div class="col-md-2">{{p.cost}}dollars</div>
+																	<br>
+																	<div class="col-md-1"></div>
+																	<!-- "tab" over columns -->
+																	<div class="col-md-3">{{p.dueDate | date :
+																		'MM/dd/yyyy'}}</div>
+																	<div class="col-md-1">
+																		<button class="btn btn-danger btn-xs"
+																			ng-click="removeInvoice($index)"
+																			name="removeInvoice">
+																			<b>x</b>
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
 								<!-- Notes and Error Messages -->
 								<div class="row">
 									<div class="form-group col-md-6">
@@ -1121,6 +1239,7 @@
 										</div>
 									</div>
 								</div>
+								
 							</div>
 							<!-- was form -->
 							<div class="panel-footer text-right">

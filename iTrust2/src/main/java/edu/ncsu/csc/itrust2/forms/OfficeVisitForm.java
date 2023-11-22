@@ -145,6 +145,8 @@ public class OfficeVisitForm implements Serializable {
     private List<DiagnosisForm>    diagnoses;
 
     private List<PrescriptionForm> prescriptions;
+    
+    private List<InvoiceForm> invoices;
 
     private String surgeryEntry;
 
@@ -185,6 +187,7 @@ public class OfficeVisitForm implements Serializable {
         setPreScheduled( ( (Boolean) ( ov.getAppointment() != null ) ).toString() );
         setDiagnoses( new ArrayList<DiagnosisForm>() );
         setPrescriptions( ov.getPrescriptions().stream().map( PrescriptionForm::new ).collect( Collectors.toList() ) );
+        setInvoices( ov.getInvoices().stream().map( InvoiceForm::new ).collect( Collectors.toList() ) );
     }
 
     /**
@@ -653,5 +656,13 @@ public class OfficeVisitForm implements Serializable {
      */
     public List<PrescriptionForm> getPrescriptions () {
         return prescriptions;
+    }
+    
+    public void setInvoices ( final List<InvoiceForm> invoices ) {
+        this.invoices = invoices;
+    }
+    
+    public List<InvoiceForm> getInvoices () {
+        return invoices;
     }
 }

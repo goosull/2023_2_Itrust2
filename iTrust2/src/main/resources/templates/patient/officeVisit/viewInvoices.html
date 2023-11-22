@@ -1,0 +1,120 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:include="layout :: head(title=~{::title},links=~{})">
+    <title>View Invoices</title>
+  </head>
+
+  <body th:include="layout :: body" th:with="content=~{::content}">
+    <div th:fragment="content">
+      <script th:inline="javascript">
+        /* Otherwise Thymeleaf tries to parse Javascript as XML and breaks itself sometimes.  Sigh */
+        /*<![CDATA[*/
+        var app = angular.module("invoicesApp", []);
+
+        app.controller("invoicesCtrl", function ($scope, $http) {
+          $scope.invoices = [];
+          $scope.pattern = /^\d{4}-\d{4}-\d{2}$/;
+          $scope.loadTable = function () {
+            $http.get("/iTrust2/api/v1/invoices").then(
+              function (response) {
+                $scope.invoices = response.data;
+                $scope.errorMessage = "";
+              },
+              function (rejection) {
+                $scope.invoices = [];
+                $scope.errorMessage = "Could not display invoices";
+              }
+            );
+          };
+          $scope.loadTable();
+
+          $scope.pay = function (invoiceId) {
+            $http.post(`/iTrust2/api/v1/invoices/${invoiceId}/pay`).then(
+              function (response) {
+                $scope.errorMessage = "";
+                $scope.successMessage = "Invoice paid successfully.";
+                $scope.loadTable();
+              },
+              function (rejection) {
+                $scope.errorMessage = "Could not pay invoice.";
+                $scope.successMessage = "";
+              }
+            );
+          };
+        });
+        /*]]>*/
+      </script>
+
+      <div ng-app="invoicesApp" ng-controller="invoicesCtrl">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3>Patient View Invoices</h3>
+                </div>
+                <div class="panel-body">
+                  <div>
+                    <p style="color: red" ng-model="errorMessage" id="errP">
+                      {{errorMessage}}
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      style="color: green"
+                      ng-model="successMessage"
+                      id="success"
+                    >
+                      {{successMessage}}
+                    </p>
+                  </div>
+                  <table class="table table-bordered">
+                    <caption>
+                      My Invoices:
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th>HCP</th>
+                        <th>Cost($)</th>
+                        <th>Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        name="invoiceTableRow"
+                        ng-repeat="p in invoices | orderBy: 'createdDate'"
+                        invoiceId="{{p.id}}"
+                      >
+                        <td name="HCP">{{p.hcp.username}}</td>
+                        <td name="Cost">{{p.cost}}</td>
+                        <td name="Date">
+                          {{p.createdDate | date : 'MM/dd/yyyy'}}
+                        </td>
+                        <td name="Due Date">
+                          {{p.dueDate | date : 'MM/dd/yyyy'}}
+                        </td>
+                        <td name="Status">{{p.status}}</td>
+                        <td name="Payment">
+                          <button
+                            ng-if="p.status == 'PENDING'"
+                            class="btn btn-primary"
+                            ng-click="pay(p.id)"
+                          >
+                            Pay
+                          </button>
+                          <span ng-if="p.status == 'PAID'">Already Paid</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

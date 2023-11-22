@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import edu.ncsu.csc.itrust2.forms.OfficeVisitForm;
 import edu.ncsu.csc.itrust2.forms.PrescriptionForm;
+import edu.ncsu.csc.itrust2.forms.InvoiceForm;
 import edu.ncsu.csc.itrust2.models.AppointmentRequest;
 import edu.ncsu.csc.itrust2.models.Diagnosis;
 import edu.ncsu.csc.itrust2.models.OfficeVisit;
@@ -45,7 +46,10 @@ public class OfficeVisitService extends Service {
 
     @Autowired
     private PrescriptionService       prescriptionService;
-
+    
+    @Autowired
+    private InvoiceService       invoiceService;
+    
     @Autowired
     private DiagnosisService          diagnosisService;
 
@@ -133,6 +137,11 @@ public class OfficeVisitService extends Service {
         final List<PrescriptionForm> ps = ovf.getPrescriptions();
         if ( ps != null ) {
             ov.setPrescriptions( ps.stream().map( prescriptionService::build ).collect( Collectors.toList() ) );
+        }
+        
+        final List<InvoiceForm> in = ovf.getInvoices();
+        if ( in != null ) {
+            ov.setInvoices( in.stream().map( invoiceService::build ).collect( Collectors.toList() ) );
         }
 
         final Patient p = (Patient) ov.getPatient();
