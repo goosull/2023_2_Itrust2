@@ -17,6 +17,7 @@ import edu.ncsu.csc.itrust2.forms.OfficeVisitForm;
 import edu.ncsu.csc.itrust2.models.OfficeVisit;
 import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.User;
+import edu.ncsu.csc.itrust2.models.enums.AppointmentType;
 import edu.ncsu.csc.itrust2.models.enums.TransactionType;
 import edu.ncsu.csc.itrust2.services.OfficeVisitService;
 import edu.ncsu.csc.itrust2.services.OphthalmologySurgeryInformationService;
@@ -116,6 +117,10 @@ public class APIOfficeVisitController extends APIController {
             officeVisitService.save( visit );
             loggerUtil.log( TransactionType.GENERAL_CHECKUP_CREATE, LoggerUtil.currentUser(),
                     visit.getPatient().getUsername() );
+            if( visit.getType() == AppointmentType.OPHTHALMOLOGY_SURGERY){
+                loggerUtil.log( TransactionType.SURGERY_OPHTHALMOLOGIST_CREATE, LoggerUtil.currentUser(),
+                    visit.getPatient().getUsername() );
+            }
             return new ResponseEntity( visit, HttpStatus.OK );
 
         }
