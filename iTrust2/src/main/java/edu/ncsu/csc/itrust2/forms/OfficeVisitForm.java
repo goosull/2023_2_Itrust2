@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
 import edu.ncsu.csc.itrust2.models.OfficeVisit;
+import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.enums.HouseholdSmokingStatus;
+import edu.ncsu.csc.itrust2.models.enums.OphthalmologySurgeryType;
 import edu.ncsu.csc.itrust2.models.enums.PatientSmokingStatus;
 
 /**
@@ -63,6 +68,7 @@ public class OfficeVisitForm implements Serializable {
     @NotEmpty
     private String                 type;
 
+    
     /**
      * Hospital where the OfficeVisit occurred
      */
@@ -91,13 +97,13 @@ public class OfficeVisitForm implements Serializable {
      * decimal precision. > 0
      */
     private Float                  weight;
-
+    
     /**
      * Head circumference of the person. Up to a 3-digit number and potentially
      * one digit of decimal precision. > 0
      */
     private Float                  headCircumference;
-
+    
     /**
      * Systolic blood pressure. 3-digit positive number.
      */
@@ -141,6 +147,30 @@ public class OfficeVisitForm implements Serializable {
     private List<PrescriptionForm> prescriptions;
     
     private List<InvoiceForm> invoices;
+
+    private String surgeryEntry;
+
+    private Long    visualAcuityOS;
+    
+    private Long    visualAcuityOD;
+
+    private Double  sphereOS;
+    
+    private Double  sphereOD;
+    
+    private Double  cylinderOS;
+
+    private Double  cylinderOD;
+    
+    private Long    axisOS;
+
+    private Long    axisOD;
+    
+    private String surgeryType;
+
+    @Length ( max = 250 )
+    private String surgeryNotes;
+
 
     /**
      * Creates an OfficeVisitForm from the OfficeVisit provided
@@ -241,7 +271,7 @@ public class OfficeVisitForm implements Serializable {
      *
      * @return Type of the visit
      */
-    public String getType () {
+    public String getType() {
         return this.type;
     }
 
@@ -462,6 +492,94 @@ public class OfficeVisitForm implements Serializable {
      */
     public void setTri ( final Integer tri ) {
         this.tri = tri;
+    }
+
+    public void setSurgeryEntry ( final String surgeryEntry) {
+        this.surgeryEntry = surgeryEntry;
+    }
+
+    public String getSurgeryEntry () {
+        return surgeryEntry;
+    }
+
+    public void setVisualAcuityOS ( final Long visualAcuityOS ) {
+        this.visualAcuityOS = visualAcuityOS;
+    }
+
+    public Long getVisualAcuityOS () {
+        return visualAcuityOS;
+    }
+
+    public void setVisualAcuityOD ( final Long visualAcuityOD) {
+        this.visualAcuityOD = visualAcuityOD;
+    }
+
+    public Long getVisualAcuityOD () {
+        return visualAcuityOD;
+    }
+
+    public void setSphereOS ( final Double sphereOS ) {
+        this.sphereOS = sphereOS;
+    }
+
+    public Double getSphereOS () {
+        return sphereOS;
+    }
+
+    public void setSphereOD ( final Double sphereOD ) {
+        this.sphereOD = sphereOD;
+    }
+
+    public Double getSphereOD () {
+        return sphereOD;
+    }
+
+    public void setCylinderOS ( final Double cylinderOS ) {
+        this.cylinderOS = cylinderOS;
+    }
+
+    public Double getCylinderOS () {
+        return cylinderOS;
+    }
+
+    public void setCylinderOD ( final Double cylinderOD ) {
+        this.cylinderOD = cylinderOD;
+    }
+
+    public Double getCylinderOD () {
+        return cylinderOD;
+    }
+
+    public void setAxisOS ( final Long axisOS ) {
+        this.axisOS = axisOS;
+    }
+
+    public Long getAxisOS () {
+        return axisOS;
+    }
+
+    public void setAxisOD ( final Long axisOD ) {
+        this.axisOD = axisOD;
+    }
+
+    public Long getAxisOD () {
+        return axisOD;
+    }
+
+    public void setSurgeryType ( final String surgeryType ) {
+        this.surgeryType = surgeryType;
+    }
+
+    public String getSurgeryType () {
+        return surgeryType;
+    }
+
+    public void setSurgeryNotes ( final String surgeryNotes ) {
+        this.surgeryNotes = surgeryNotes;
+    }
+
+    public String getSurgeryNotes () {
+        return surgeryNotes;
     }
 
     /**

@@ -3429,6 +3429,10 @@ textarea.form-group-lg .form-control, select[multiple].form-group-lg .form-contr
 	background-color: #fff;
 }
 
+.btn-edit {
+    float: right; 
+}
+
 .btn-success {
 	color: #fff;
 	background-color: #5cb85c;
@@ -3462,6 +3466,8 @@ textarea.form-group-lg .form-control, select[multiple].form-group-lg .form-contr
 	color: #5cb85c;
 	background-color: #fff;
 }
+
+
 
 .btn-info {
 	color: #fff;

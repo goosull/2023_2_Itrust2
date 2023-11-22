@@ -113,6 +113,10 @@ public class OfficeVisit extends DomainObject {
     @OneToMany ( cascade = CascadeType.ALL )
     @JsonManagedReference
     private List<Prescription> prescriptions;
+    
+    @OneToOne ( cascade = CascadeType.ALL )
+    @JoinColumn ( name = "opht_surgery_id" )
+    private OphthalmologySurgeryInformation ophtSurgery;
 
     @OneToMany ( cascade = CascadeType.ALL )
     @JsonManagedReference
@@ -386,6 +390,13 @@ public class OfficeVisit extends DomainObject {
     public List<Prescription> getPrescriptions () {
         return prescriptions;
     }
+
+    public void setOphthalmologySurgeryInformation ( final OphthalmologySurgeryInformation surgery ) {
+        this.ophtSurgery = surgery;
+    }
+
+    public OphthalmologySurgeryInformation getOphthalmologySurgeryInformation () {
+        return ophtSurgery;
     
     public void setInvoices ( final List<Invoice> invoices ) {
         this.invoices = invoices;

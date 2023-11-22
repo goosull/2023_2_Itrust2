@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,7 @@ import edu.ncsu.csc.itrust2.forms.InvoiceForm;
 import edu.ncsu.csc.itrust2.models.AppointmentRequest;
 import edu.ncsu.csc.itrust2.models.Diagnosis;
 import edu.ncsu.csc.itrust2.models.OfficeVisit;
+import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.Patient;
 import edu.ncsu.csc.itrust2.models.User;
 import edu.ncsu.csc.itrust2.models.enums.AppointmentType;
@@ -49,6 +52,9 @@ public class OfficeVisitService extends Service {
     
     @Autowired
     private DiagnosisService          diagnosisService;
+
+    @Autowired
+    private OphthalmologySurgeryInformationService ophthalmologySurgeryInformationService;
 
     @Override
     protected JpaRepository getRepository () {
@@ -114,6 +120,8 @@ public class OfficeVisitService extends Service {
         }
         ov.setHospital( hospitalService.findByName( ovf.getHospital() ) );
         ov.setBasicHealthMetrics( bhmService.build( ovf ) );
+        if(at == AppointmentType.OPHTHALMOLOGY_SURGERY)
+            ov.setOphthalmologySurgeryInformation( ophthalmologySurgeryInformationService.build( ovf ) );
 
         // associate all diagnoses with this visit
         if ( ovf.getDiagnoses() != null ) {
@@ -151,6 +159,7 @@ public class OfficeVisitService extends Service {
                 age -= 1;
             }
         }
+
 
         if ( age < 3 ) {
             ov.validateUnder3();
