@@ -107,7 +107,7 @@ public class APIOfficeVisitController extends APIController {
     public ResponseEntity createOfficeVisit ( @RequestBody final OfficeVisitForm visitForm ) {
         try {
             final OfficeVisit visit = officeVisitService.build( visitForm );
-
+            
             if ( null != visit.getId() && officeVisitService.existsById( visit.getId() ) ) {
                 return new ResponseEntity(
                         errorResponse( "Office visit with the id " + visit.getId() + " already exists" ),

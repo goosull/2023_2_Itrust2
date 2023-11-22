@@ -114,7 +114,7 @@ public class OfficeVisit extends DomainObject {
     @JsonManagedReference
     private List<Prescription> prescriptions;
 
-    @OneToOne
+    @OneToOne ( cascade = CascadeType.ALL )
     @JoinColumn ( name = "opht_surgery_id" )
     private OphthalmologySurgeryInformation ophtSurgery;
 

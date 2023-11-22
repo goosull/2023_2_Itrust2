@@ -2,8 +2,6 @@ package edu.ncsu.csc.itrust2.services;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import edu.ncsu.csc.itrust2.forms.OfficeVisitForm;
-import edu.ncsu.csc.itrust2.models.AppointmentRequest;
-import edu.ncsu.csc.itrust2.models.OfficeVisit;
 import edu.ncsu.csc.itrust2.models.OphthalmologySurgeryInformation;
 import edu.ncsu.csc.itrust2.models.User;
 import edu.ncsu.csc.itrust2.models.enums.OphthalmologySurgeryType;
@@ -20,14 +16,13 @@ import edu.ncsu.csc.itrust2.repositories.OphthalmologySurgeryInformationReposito
 
 @Component
 @Transactional
-
 public class OphthalmologySurgeryInformationService extends Service {
 
     @Autowired
-    private OphthalmologySurgeryInformationRepository repository;
+    private OphthalmologySurgeryInformationRepository   repository;
 
     @Autowired
-    private OfficeVisitService  service;
+    private UserService                                 userService;
 
     @Override
     protected JpaRepository getRepository () {
@@ -49,6 +44,9 @@ public class OphthalmologySurgeryInformationService extends Service {
     
     public OphthalmologySurgeryInformation build ( final OfficeVisitForm ovf ) {
         final OphthalmologySurgeryInformation osi = new OphthalmologySurgeryInformation();
+        
+        osi.setPatient( userService.findByName( ovf.getPatient() ) );
+        osi.setHcp( userService.findByName( ovf.getHcp() ) );
 
         osi.setAxisOD(ovf.getAxisOD());
         osi.setAxisOS(ovf.getAxisOS());
@@ -57,18 +55,14 @@ public class OphthalmologySurgeryInformationService extends Service {
 
         final ZonedDateTime visitDate = ZonedDateTime.parse( ovf.getDate() );
         osi.setDate(visitDate);
-
-        if ( ovf.getId() != null ) {
-            osi.setId( Long.parseLong( ovf.getId() ) );
-        }
-
-        osi.setNotes(ovf.getNotes());
+        
+        osi.setNotes(ovf.getSurgeryNotes());
         osi.setSphereOD(ovf.getSphereOD());
         osi.setSphereOS(ovf.getSphereOS());
 
         OphthalmologySurgeryType type = null;
         try {
-            type = OphthalmologySurgeryType.valueOf( ovf.getType() );
+            type = OphthalmologySurgeryType.valueOf( ovf.getSurgeryType() );
         }
         catch ( final NullPointerException npe ) {
             type = OphthalmologySurgeryType.CATARACT;

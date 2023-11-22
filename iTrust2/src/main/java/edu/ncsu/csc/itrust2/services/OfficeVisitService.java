@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -114,6 +116,8 @@ public class OfficeVisitService extends Service {
         }
         ov.setHospital( hospitalService.findByName( ovf.getHospital() ) );
         ov.setBasicHealthMetrics( bhmService.build( ovf ) );
+        if(at == AppointmentType.OPHTHALMOLOGY_SURGERY)
+            ov.setOphthalmologySurgeryInformation( ophthalmologySurgeryInformationService.build( ovf ) );
 
         // associate all diagnoses with this visit
         if ( ovf.getDiagnoses() != null ) {
@@ -147,6 +151,7 @@ public class OfficeVisitService extends Service {
             }
         }
 
+
         if ( age < 3 ) {
             ov.validateUnder3();
         }
@@ -155,11 +160,6 @@ public class OfficeVisitService extends Service {
         }
         else {
             ov.validate12AndOver();
-        }
-
-        if ( ov.getType() == AppointmentType.OPHTHALMOLOGY_SURGERY) {
-            OphthalmologySurgeryInformation surgery = ophthalmologySurgeryInformationService.build( ovf ); 
-            ov.setOphthalmologySurgeryInformation( surgery );
         }
 
         return ov;

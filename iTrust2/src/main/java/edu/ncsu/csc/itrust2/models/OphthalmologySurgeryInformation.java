@@ -12,11 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.gson.annotations.JsonAdapter;
 
 import edu.ncsu.csc.itrust2.adapters.ZonedDateTimeAdapter;
@@ -26,6 +24,9 @@ import edu.ncsu.csc.itrust2.models.enums.OphthalmologySurgeryType;
 @Entity
 @Table ( name = "OphthalmologySurgeryInf" )
 public class OphthalmologySurgeryInformation extends DomainObject {
+
+    public OphthalmologySurgeryInformation () {
+    }
 
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO )
@@ -67,12 +68,10 @@ public class OphthalmologySurgeryInformation extends DomainObject {
 
     private Long    axisOD;
 
-    @NotNull
+    //@NotNull
     @Enumerated ( EnumType.STRING )
     private OphthalmologySurgeryType    type;
 
-    @NotNull
-    @JoinColumn ( columnDefinition = "varchar(500)" )
     private String      notes;
 
 
@@ -89,6 +88,7 @@ public class OphthalmologySurgeryInformation extends DomainObject {
         }
     }
 
+    @SuppressWarnings ( "unused" )
     public void setId( final Long id ) {
         this.id = id;
     }
