@@ -10,5 +10,4 @@ import edu.ncsu.csc.itrust2.models.OfficeVisit;
 public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
 
     public List<Diagnosis> findByVisit ( OfficeVisit visit );
-
 }

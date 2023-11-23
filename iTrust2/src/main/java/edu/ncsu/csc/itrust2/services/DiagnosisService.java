@@ -1,5 +1,6 @@
 package edu.ncsu.csc.itrust2.services;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,22 @@ public class DiagnosisService extends Service {
 
     public List<Diagnosis> findByVisit ( final OfficeVisit visit ) {
         return repository.findByVisit( visit );
+    }
+
+    //add
+    public List<Diagnosis> findByPatientForEHR( final User patient ) {
+    	ZonedDateTime startDate = ZonedDateTime.now().minusDays(60);
+    	
+    	List<Diagnosis> diagnosis = service.findByPatient( patient ).stream().map( e -> findByVisit( e ) ).flatMap( e -> e.stream() )
+    	        .collect( Collectors.toList() );
+    	
+        List<Diagnosis> diagnosisLast60Days = diagnosis.stream()
+                .filter(e -> e.getVisit().getDate().isAfter(startDate) || e.getVisit().getDate().isEqual(startDate))
+                .collect(Collectors.toList());
+
+        diagnosisLast60Days.sort((p1, p2) -> p2.getVisit().getDate().compareTo(p1.getVisit().getDate()));
+
+        return diagnosisLast60Days;
     }
 
 }

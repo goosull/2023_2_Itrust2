@@ -122,4 +122,17 @@ public class HCPController {
         return "/hcp/editOfficeVisit";
     }
 
+    /**
+     * Returns the page for a HCP to view Emergency Health Records
+     *
+     * @param model
+     *            The data for the front end
+     * @return Page to display to the user
+     */
+    @GetMapping ( "/hcp/viewEHR" )
+    @PreAuthorize ( "hasRole('ROLE_HCP')" )
+    public String viewEHR ( final Model model ) {
+        return "/hcp/viewEHR";
+    }
+    
 }

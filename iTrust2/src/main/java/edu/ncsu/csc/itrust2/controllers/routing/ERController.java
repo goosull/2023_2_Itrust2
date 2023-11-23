@@ -3,6 +3,7 @@ package edu.ncsu.csc.itrust2.controllers.routing;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.ncsu.csc.itrust2.models.enums.Role;
@@ -41,6 +42,19 @@ public class ERController {
     @PreAuthorize ( "hasRole('ROLE_ER')" )
     public String emergencyRecords ( final Model model ) {
         return "personnel/records";
+    }
+
+    /**
+     * Returns the page for a ER to view Emergency Health Records
+     *
+     * @param model
+     *            The data for the front end
+     * @return Page to display to the user
+     */
+    @GetMapping ( "/er/viewEHR" )
+    @PreAuthorize ( "hasRole('ROLE_ER')" )
+    public String viewEHR ( final Model model ) {
+        return "/er/viewEHR";
     }
 
 }

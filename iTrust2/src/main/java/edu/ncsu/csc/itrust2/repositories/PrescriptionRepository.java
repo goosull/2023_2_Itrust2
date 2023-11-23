@@ -10,5 +10,4 @@ import edu.ncsu.csc.itrust2.models.User;
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
 
     public List<Prescription> findByPatient ( final User patient );
-
 }

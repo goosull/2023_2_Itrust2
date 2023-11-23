@@ -1,6 +1,8 @@
 package edu.ncsu.csc.itrust2.controllers.api;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,10 @@ public class APIPatientController extends APIController {
 
     @Autowired
     private LoggerUtil     loggerUtil;
+
+    private String PatternOfId = "^[a-zA-Z0-9\\-_]+$"; 
+
+    private String PatternOfName = "^[a-zA-Z\\-\\'\\s]+$";
 
     /**
      * Retrieves and returns a list of all Patients stored in the system
@@ -191,4 +197,84 @@ public class APIPatientController extends APIController {
 
     }
 
+    /**
+     * The approved user enters the desired patients First and/or Last Name (or a correct substring of either/both) into the search box.  
+     * The patients with first/last names containing the substring(s) provided are shown.
+     * 
+     * @param Nameid User's input 
+     * 
+     * @return list of searched patients
+     */
+    @GetMapping ( BASE_PATH + "/patient/name/{Name}" )
+    @PreAuthorize ( "hasAnyRole( 'ROLE_HCP', 'ROLE_ER' )")
+    public ResponseEntity getPatientsbyName ( @PathVariable("Name") String Name){
+        if ( (Name == null) || (Pattern.matches(PatternOfName, Name) == false)) {
+            return new ResponseEntity(errorResponse("You should enter the valid Patient's name"), HttpStatus.BAD_REQUEST);
+        }
+        else {
+            List<Patient> patients = (List<Patient>) patientService.findAll();
+            List<Patient> searchedPatients = new ArrayList<>();
+
+            for (int i = 0; i < patients.size(); i++){
+                    if((patients.get(i).getFirstName()+patients.get(i).getLastName()).contains(Name)){
+                        searchedPatients.add(patients.get(i));
+                    }
+                }
+
+            if ( searchedPatients.size() == 0 ) {
+                return new ResponseEntity( errorResponse( "No Patient found for Name " + Name ),
+                    HttpStatus.NOT_FOUND );
+            }
+            else {
+                return new ResponseEntity( searchedPatients, HttpStatus.OK );
+            }
+        }
+    } 
+
+    /**
+     * The approved user enters the desired patients MID (username), or a correct substring of it, in the search box.  
+     * The patient/s matching the MID/MID substring are displayed.
+     * 
+     * @param Nameid User's input 
+     * 
+     * @return list of searched patients
+     */
+    @GetMapping ( BASE_PATH + "/patient/id/{Id}" )
+    @PreAuthorize ( "hasAnyRole( 'ROLE_HCP', 'ROLE_ER' )")
+    public ResponseEntity getPatientsbyId ( @PathVariable("Id") String Id){
+        if ( (Id == null) || (Id.length() < 6) || (Id.length() > 20) || (Pattern.matches(PatternOfId, Id) == false)) {
+            return new ResponseEntity(errorResponse("You should enter the valid Patient's Username"), HttpStatus.BAD_REQUEST);
+        }
+        else {
+            List<Patient> patients = (List<Patient>) patientService.findAll();
+            List<Patient> searchedPatients = new ArrayList<>();
+
+            String username;
+            for (int i = 0; i < patients.size(); i++){
+            		username = patients.get(i).getUsername();
+            		int indexOfId = 0;
+            		boolean find = false;
+            		for (int j = 0; j < username.length(); j++) {
+            			if (username.charAt(j) == Id.charAt(indexOfId)) {
+            				indexOfId++;
+            				if (indexOfId == Id.length()) {
+            					find = true;
+            					break;
+            				}
+            			}
+            		}
+                    if(find){
+                        searchedPatients.add(patients.get(i));
+                    }
+                }
+
+            if ( searchedPatients.size() == 0 ) {
+                return new ResponseEntity( errorResponse( "No Patient found for Username " + Id ),
+                    HttpStatus.NOT_FOUND );
+            }
+            else {
+                return new ResponseEntity( searchedPatients, HttpStatus.OK );
+            }
+        }
+    } 
 }
