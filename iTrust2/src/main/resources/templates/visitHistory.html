@@ -1,0 +1,316 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="log">
+
+    <script th:src="@{/js/dateTimeService.js}"
+            src="../js/dateTimeService.js"></script>
+
+    <!-- main function that loads logView.html -->
+    <div ng-app="logsApp" ng-controller="logsCtrl as ctrl">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <!-- log entry header -->
+                        <div class="panel-heading">
+                            <h3>Visit Histories</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <table class="table table-bordered" name="log_table">
+                                
+                                <!-- table column headers -->
+                                <thead>
+                                <tr>
+                                    <th>Visit Type</th>
+                                    <th>Patient Name</th>
+                                    <th>Disease Name</th>
+                                    <th>Date & Time</th>
+                                    <!-- <th ng-if="ctrl.isPatient">Role</th> -->
+                                </tr>
+                                </thead>
+
+                                <!-- log entry for every row, ordered by date -->
+                                <tbody>
+                                <tr name="logTableRow" ng-repeat="l in ctrl.logs" ng-show="ctrl.username === l.hcp.username">
+                                    <td name="type">{{l.type}}</td>
+                                    <td name="patient">{{l.patient.username}}</td>
+                                    <td name="disease">{{l.diagnoses[0].note}}</td>
+                                    <td name="date">{{l.date | date : 'EEE MMM dd
+                                        h:mm:ss a yyyy'}} <button class="btn btn-success btn-edit" ng-click="ctrl.openEditModal(l)" style="
+                                        float: right;
+                                        width: 49.46px; 
+                                        height: 30.5px; 
+                                        ">Edit</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 모달 창 -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+            <!-- 모달 내용 -->
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Ophthalmology Surgery Information</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- visit 객체의 속성을 사용하여 데이터를 표시 -->
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Surgery Date:</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="date" class="form-control" name="surgeryEntry" ng-model="visit.date" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Visual Acuity Results:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="visualAcuityOD"
+                                    ng-model="visit.visualAcuityOD" required></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="visualAcuityOS"
+                                    ng-model="visit.visualAcuityOS" required></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Sphere:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="sphereOS"
+                                    ng-model="visit.sphereOD" required></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="sphereOS"
+                                    ng-model="visit.sphereOS" required></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Cylinder:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="cylinderOD"
+                                    ng-model="visit.cylinderOD"></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="cylinderOS"
+                                    ng-model="visit.cylinderOS"></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Axis:</label>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OD:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="axisOD"
+                                    ng-model="visit.axisOD"></input>
+                            </div>
+                            <div class="col-xs-1">
+                                <span id="helpBlock" class="help-block">OS:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <input class="form-control" name="axisOS"
+                                    ng-model="visit.axisOS"></input>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Surgery Type:</label>
+                            </div>
+                            <div class="col-xs-6 radio-box">
+                                <div class="form-check">
+                                    <ul style="list-style: none;">
+                                        <li ng-repeat="ophthtype in ophthsurgery"><label>
+                                                <input type="radio"
+                                                ng-model="$parent.visit.type"
+                                                name="surgeryType" value="{{ophthtype}}"
+                                                required="true" /> {{ophthtype}}
+                                        </label></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <label>Notes:</label>
+                                <textarea name="surgeryNotes" ng-model="visit.notes"
+                                    class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="ctrl.saveChanges()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <script>
+
+            var App = angular.module('logsApp',['dateTimeServices']);
+
+            angular.module("logsApp").controller('logsCtrl', function($scope, $http, $filter, dateTimeService) {
+                var self = this;
+                self.logs = [];
+                self.username = "";
+                self.type = "";
+                self.jobs = [];
+                self.hcp = "";
+
+                self.getUsername = function (){
+                    $http.get("/iTrust2/api/v1/curPersonnel", self.requestParams).then(function (response) {
+                        // self.userdata = response.data;
+                        self.username = response.data.username;
+                        // console.log(response.data.id)
+                        console.log(self.username);
+                    });
+                }
+                
+
+                /*추후 수정 바람*/
+                self.updateTable = function() {
+                    $http.get("/iTrust2/api/v1/officevisits", self.requestParams).then(function (response) {
+                        self.logs = response.data;
+                        console.log(self.logs);
+                        if(self.logs.length > 0){
+                            self.type = self.logs[0].type;
+                            console.log(self.type);
+                            self.hcp = /*[[${#httpServletRequest.remoteUser}]]*/null;
+                            console.log(self.hcp);
+                            // self.isPatient = self.logs[0].isPatient;
+                            // self.numPages = self.logs[0].numPages;
+                        }else{
+                            self.numPages = 1;
+                        }
+                        self.updatePageString();
+                    });
+                }
+                
+                // 수정 모달 열기
+                self.openEditModal = function(log) {
+                // 모달을 열기 전에 수정할 데이터를 visit 객체에 설정합니다.
+                    $scope.visit = log.ophthalmologySurgeryInformation;
+                    $scope.visit.date = new Date($scope.visit.date);
+                    $scope.visit.patient = $scope.visit.patient.username;
+                    $scope.visit.hcp = $scope.visit.hcp.username;
+                    console.log($scope.visit);
+                    $('#editModal').modal('show'); // Bootstrap 모달 창을 엽니다.
+                };
+
+                self.saveChanges = function() {
+
+                    // console.log(dataToSend)
+                    checkEyeHealthMetrics();
+                    console.log($scope.visit.id);
+                    $http.put("/iTrust2/api/v1/ophtsurgery/"
+                        + $scope.visit.id, $scope.visit).then(
+                        function(response) {
+                            $scope.message = "Your demographics were updated successfully."
+                        }, function(rejection) {
+                            $scope.message = "Failed to update demographics."
+                        });
+                    
+                    $('#editModal').modal('hide');
+                };
+
+                /*Checks validity of eye health metrics*/
+                function checkEyeHealthMetrics() {
+                    if (/^[0-9]{1,3}?$/.test(String($scope.visit.visualAcuityOS).replace(/^0+/, '')) == false) {
+                        $scope.errorMsg += "Visual Acuity OS must be an integer value between 20 and 200 inclusive\n"
+                    } else if (parseInt($scope.visit.visualAcuityOS) < 20 || parseInt($scope.visit.visualAcuityOS) > 200) {
+                        $scope.errorMsg += "Visual Acuity OS must be an integer value between 20 and 200 inclusive\n"
+                    }
+
+                    if (/^[0-9]{1,3}?$/.test(String($scope.visit.visualAcuityOD).replace(/^0+/, '')) == false) {
+                        $scope.errorMsg += "Visual Acuity OD must be an integer value between 20 and 200 inclusive\n"
+                    } else if (parseInt($scope.visit.visualAcuityOD) < 20 || parseInt($scope.visit.visualAcuityOD) > 200) {
+                        $scope.errorMsg += "Visual Acuity OD must be an integer value between 20 and 200 inclusive\n"
+                    }
+
+                    if (/^[\-\+]?(?=.*\d)\d*(?:\.\d\d?)?$/.test(String($scope.visit.sphereOS)) == false) {
+                        $scope.errorMsg += "Sphere OS must be a floating point number up to two digits\n"
+                    }
+                    if (/^[\-\+]?(?=.*\d)\d*(?:\.\d\d?)?$/.test(String($scope.visit.sphereOD)) == false) {
+                        $scope.errorMsg += "Sphere OD must be a floating point number up to two digits\n"
+                    }
+
+                    if ($scope.visit.cylinderOS != undefined || $scope.visit.cylinderOD != undefined) {
+                        if (/^[\-\+]?(?=.*\d)\d*(?:\.\d\d?)?$/.test(String($scope.visit.cylinderOS)) == false) {
+                            $scope.errorMsg += "Cylinder OS must be a floating point number up to two digits\n"
+                        }
+                        if (/^[\-\+]?(?=.*\d)\d*(?:\.\d\d?)?$/.test(String($scope.visit.cylinderOD)) == false) {
+                            $scope.errorMsg += "Cylinder OD must be a floating point number up to two digits\n"
+                        }
+                        
+                        if (/^[0-9]{1,3}?$/.test(String($scope.visit.axisOS).replace(/^0+/, '')) == false) {
+                            $scope.errorMsg += "Axis OS must be an integer value between 1 and 180 inclusive\n"
+                        } else if (parseInt($scope.visit.axisOS) < 1 || parseInt($scope.visit.axisOS) > 180) {
+                            $scope.errorMsg += "Axis OS must be an integer value between 1 and 180 inclusive\n"
+                        }
+                        if (/^[0-9]{1,3}?$/.test(String($scope.visit.axisOD).replace(/^0+/, '')) == false) {
+                            $scope.errorMsg += "Axis OD must be an integer value between 1 and 180 inclusive\n"
+                        } else if (parseInt($scope.visit.axisOD) < 1 || parseInt($scope.visit.axisOD) > 180) {
+                            $scope.errorMsg += "Axis OD must be an integer value between 1 and 180 inclusive\n"
+                        }
+                    }
+
+                    if ($scope.visit.type == "OPHTHALMOLOGY_SURGERY" && !$scope.visit.surgeryType) {
+                        $scope.errorMsg += "Please select one of the listed surgery types\n";
+                    }
+                }
+
+
+                $http.get("/iTrust2/api/v1/ophthsurgery").then(
+                    function (response){
+                        $scope.ophthsurgery = response.data;
+                    });
+
+              
+               
+
+                
+
+                self.getUsername();
+                self.updateTable();
+
+            });
+        </script>
+    </div>
+</div>
+</html>

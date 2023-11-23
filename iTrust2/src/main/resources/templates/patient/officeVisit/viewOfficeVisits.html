@@ -1,0 +1,196 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: head(title=~{::title},links=~{})">
+<title>View Office Visits</title>
+</head>
+
+<body th:include="layout :: body" th:with="content=~{::content}">
+	<div th:fragment="content">
+
+
+		<script th:inline="javascript">
+      /* Otherwise Thymeleaf tries to parse Javascript as XML and breaks itself sometimes.  Sigh */
+      /*<![CDATA[*/
+      var app = angular.module("pastApp", []);
+	  
+      app.controller('pastCtrl', function ($scope, $http) {
+        $scope.pasts = [];
+        $scope.pattern = /^\d{4}-\d{4}-\d{2}$/;
+
+        $scope.loadTable = function () {
+          $http.get("/iTrust2/api/v1/officevisits/myofficevisits").then(
+            function (response) {
+              $scope.pasts = response.data;
+              $scope.message = "";
+            }, function (rejection) {
+              $scope.pasts = [];
+              $scope.message = "Could not display Past Office Visit";
+            });
+        }
+		$scope.show = function(oph) {
+					$scope.visit = oph;
+
+                    $('#editModal').modal('show'); // Bootstrap 모달 창을 엽니다.
+                };
+        $scope.loadTable();
+      });
+			/*]]>*/
+    </script>
+
+		<div ng-app="pastApp" ng-controller="pastCtrl">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3>Patient View Past Office Visit</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-bordered">
+									<caption>My Office Visits:</caption>
+									<thead>
+										<tr>
+											<th>Type</th>
+											<th>Hcp Name</th>
+											<th>Disease Name</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr name="pastTableRow"
+											ng-repeat="p in pasts | orderBy: 'date'">
+											<td name="typeCell">{{p.type}}</td>
+											<td name="nameCell">{{p.hcp.username}}</td>
+											<td name="diseaseCell">{{p.diagnoses[0].note}}</td>
+											<td name="date">{{p.date | date : 'EEE MMM dd
+												h:mm:ss a yyyy'}} <button ng-click="show(p.ophthalmologySurgeryInformation)" style="
+												float: right;
+												width: 49.46px; 
+												height: 30.5px; 
+												">View</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" >
+				<!-- 모달 내용 -->
+				<div class="modal-dialog" role="document" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">View Ophthalmology Surgery Information</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<!-- visit 객체의 속성을 사용하여 데이터를 표시 -->
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Surgery Date:</label>
+								</div>
+								<div class="col-xs-6">
+									<label>{{visit.date}}</label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Visual Acuity Results:</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OD:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.visualAcuityOD}}</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OS:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.visualAcuityOD}}</label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Sphere:</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OD:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.sphereOD}}</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OS:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.sphereOS}}</label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Cylinder:</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OD:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.cylinderOD}}</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OS:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.cylinderOS}}</label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Axis:</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OD:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.axisOD}}</label>
+								</div>
+								<div class="col-xs-1">
+									<span id="helpBlock" class="help-block">OS:</span>
+								</div>
+								<div class="col-xs-2">
+									<label>{{visit.axisOS}}</label>
+								</div>
+							</div>
+	
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Surgery Type:</label>
+								</div>
+								<div class="col-xs-6 radio-box">
+									<label>{{visit.type}}</label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-xs-6">
+									<label>Notes:</label>
+									<label>{{visit.notes}}</label>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+</body>
+
+</html>

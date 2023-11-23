@@ -113,7 +113,15 @@ public class OfficeVisit extends DomainObject {
     @OneToMany ( cascade = CascadeType.ALL )
     @JsonManagedReference
     private List<Prescription> prescriptions;
+    
+    @OneToOne ( cascade = CascadeType.ALL )
+    @JoinColumn ( name = "opht_surgery_id" )
+    private OphthalmologySurgeryInformation ophtSurgery;
 
+    @OneToMany ( cascade = CascadeType.ALL )
+    @JsonManagedReference
+    private List<Invoice> invoices;
+    
     /** For Hibernate/Thymeleaf _must_ be an empty constructor */
     public OfficeVisit () {
     }
@@ -383,4 +391,18 @@ public class OfficeVisit extends DomainObject {
         return prescriptions;
     }
 
+    public void setOphthalmologySurgeryInformation ( final OphthalmologySurgeryInformation surgery ) {
+        this.ophtSurgery = surgery;
+    }
+
+    public OphthalmologySurgeryInformation getOphthalmologySurgeryInformation () {
+        return ophtSurgery;
+    
+    public void setInvoices ( final List<Invoice> invoices ) {
+        this.invoices = invoices;
+    }
+    
+    public List<Invoice> getInvoices () {
+        return invoices;
+    }
 }

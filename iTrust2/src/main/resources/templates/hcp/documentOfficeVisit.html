@@ -75,6 +75,17 @@
                         }
                         return err.join(". ");
                     }
+                    
+                    var checkValidInvoice = function (p) {
+						var err = [];
+						if (!/^\+?\d+$/.test(p.cost)) {
+                            err.push("Cost must be a positive integer");
+                        }
+                        if (!dateTimeService.isValidDate(p.dueDate)) {
+                            err.push("Due date is in an invalid format");
+                        }
+						return err.join(". ");
+					}
 
                     $scope.three = false;
                     $scope.threeAndUp = false;
@@ -162,6 +173,11 @@
                         function (response) {
                             $scope.icdcodes = response.data;
                         });
+					/*Getting a list of surgery types*/
+					$http.get("/iTrust2/api/v1/ophthsurgery").then(
+						function (response){
+							$scope.ophthsurgery = response.data;
+						});
 
                     /*Getting a list of laboratory procedures*/
                     $http.get("/iTrust2/api/v1/personnel/getbyroles/ROLE_LABTECH").then(
@@ -187,8 +203,8 @@
                         function (response) {
                             $scope.loinccodes = response.data;
                         });
-*/
-
+					*/
+					
                     /*Checks Basic Health Metrics for correctness*/
                     function checkBasicHealthMetrics() {
                         if (/^[0-9]{1,3}(\.[0-9]?)?$/.test(String($scope.visit.height).replace(/^0+/, '')) == false) {
@@ -356,6 +372,13 @@
 
                                 $scope.visit.labProcedures = $scope.procedures;
                                 
+                                $scope.visit.invoices = $scope.invoices;
+                                $scope.visit.invoices.forEach(function (p) {
+                                    p.patient = $scope.visit.patient;
+                                    p.hcp = $scope.visit.hcp;
+                                    p.status = 0;
+                                });
+                                
                                 $http({
                                     method: 'POST',
                                     url: '/iTrust2/api/v1/officevisits',
@@ -368,8 +391,23 @@
                                     $scope.errorMsg = "Error occurred creating office visit";
                                 })
                             }
-                        }
-                         else {
+                        } else if($scope.visit.type == 'OPHTHALMOLOGY_SURGERY') {
+							checkBasicHealthMetrics();
+							checkEyeHealthMetrics();
+							if ($scope.errorMsg == "") {
+                                $http({
+                                    method: 'POST',
+                                    url: '/iTrust2/api/v1/officevisits',
+                                    data: $scope.visit
+                                }).then(function (response) {
+                                    $scope.errorMsg = "";
+                                    $scope.message = "Office visit created successfully";
+                                }, function (rejection) {
+                                    $scope.message = "";
+                                    $scope.errorMsg = "Error occurred creating office visit";
+                                })
+							}
+						} else {
                             $scope.message = "";
                             $scope.errorMsg = "Invalid office visit type";
                         }
@@ -384,13 +422,17 @@
                     $scope.startEntry = "";
                     $scope.endEntry = "";
                     $scope.renewalEntry = "";
-
+				
+					$scope.costEntry = "";
+                    $scope.duedateEntry = "";
+					
                     $scope.loincEntry = "";
                     $scope.priorityEntry = "";
                     $scope.techEntry = "";
 
                     $scope.procedure = {};
                     $scope.procedures = [];
+                    $scope.invoices = [];
 
                     // Clears local variables for diagnosis form
                     function resetDiagnosisForm() {
@@ -406,6 +448,13 @@
                         $scope.endEntry = "";
                         $scope.renewalEntry = "";
                     }
+                    
+                    // Clears local variables for cost form
+                    function resetInvoiceForm() {
+                        $scope.costEntry = "";
+                        $scope.duedateEntry = "";
+                    }
+                    
 
                     // Capture each diagnosis into an array
                     $scope.diagnoses = [];
@@ -474,6 +523,25 @@
                             $scope.message = "Lab procedure added successfully";
                         }
                     }
+                    
+                    //Adding a invoice to office visit
+                    $scope.addInvoice = function () {
+                        $scope.errorMsg = "";
+                        var p = {
+                            cost: $scope.costEntry,
+                            dueDate: $scope.duedateEntry,
+                        }
+                        
+                        var err = checkValidInvoice(p);
+                        if (err) {
+                            $scope.errorMsg = err;
+                            $scope.message = "";
+                        } else {
+                            p.dueDate = dateTimeService.toDateString(p.dueDate);
+                            $scope.invoices.push(p);
+                            resetInvoiceForm();
+                        }
+                    }
 
                     //remove local diagnosis from list
                     $scope.removeDiagnosis = function ($index) {
@@ -489,10 +557,16 @@
                     $scope.removeProcedure = function ($index) {
                         $scope.procedures.splice($index, 1);
                     }
-
+					
+					//remove local invoice from list
+                    $scope.removeInvoice = function ($index) {
+                        $scope.invoices.splice($index, 1);
+                    }
+                    
                     //call initally
                     resetDiagnosisForm();
                     resetPrescriptionForm();
+                    resetInvoiceForm();
                 });
 			/*]]>*/
             </script>
@@ -963,8 +1037,194 @@
 											</div>
 										</div>
 									</div>
-
 								</div>
+
+								<!-- Ophthalmology Surgery Information -->
+								<div ng-show="visit.type == 'OPHTHALMOLOGY_SURGERY'" class="row">
+									<div class="col-md-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Ophthalmology Surgery Information</h4>
+											</div>
+											<div class="panel-body">
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Surgery Date:</label>
+													</div>
+													<div class="col-xs-6">
+														<input type="date" class="form-control" name="surgeryEntry"
+															ng-model="visit.surgeryEntry" required />
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Visual Acuity Results:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="visualAcuityOD"
+															ng-model="visit.visualAcuityOD" required></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="visualAcuityOS"
+															ng-model="visit.visualAcuityOS" required></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Sphere:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="sphereOS"
+															ng-model="visit.sphereOD" required></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="sphereOS"
+															ng-model="visit.sphereOS" required></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Cylinder:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="cylinderOD"
+															ng-model="visit.cylinderOD"></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="cylinderOS"
+															ng-model="visit.cylinderOS"></input>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Axis:</label>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OD:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="axisOD"
+															ng-model="visit.axisOD"></input>
+													</div>
+													<div class="col-xs-1">
+														<span id="helpBlock" class="help-block">OS:</span>
+													</div>
+													<div class="col-xs-2">
+														<input class="form-control" name="axisOS"
+															ng-model="visit.axisOS"></input>
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Surgery Type:</label>
+													</div>
+													<div class="col-xs-6 radio-box">
+														<div class="form-check">
+															<ul style="list-style: none;">
+																<li ng-repeat="ophthtype in ophthsurgery"><label>
+																		<input type="radio"
+																		ng-model="$parent.visit.surgeryType"
+																		name="surgeryType" value="{{ophthtype}}"
+																		required="true" /> {{ophthtype}}
+																</label></li>
+															</ul>
+														</div>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Notes:</label>
+														<textarea name="surgeryNotes" ng-model="visit.surgeryNotes"
+															class="form-control" rows="3"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!-- Invoice Panel -->
+								<div ng-show="visit.type == 'GENERAL_CHECKUP'" class="row">
+									<div class="col-md-4">
+										<div class="panel panel-info">
+											<div class="panel-heading">
+												<h4>Invoice</h4>
+											</div>
+											<div class="panel-body">
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Cost:</label>
+													</div>
+													<div class="col-xs-4">
+														<input class="form-control" name="costEntry"
+															ng-model="costEntry" required></input>
+													</div>
+													<div class="col-xs-2">
+														<span id="helpBlock" class="help-block">dollars</span>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-xs-6">
+														<label>Due Date:</label>
+													</div>
+													<div class="col-xs-6">
+														<input type="date" class="form-control" name="duedateEntry"
+															ng-model="duedateEntry" required />
+													</div>
+												</div>
+												<div class="form-group row text-center">
+													<button class="btn btn-success"
+														ng-click="addInvoice()" name="addInvoice">Add
+														Invoice</button>
+												</div>
+												<div class="form-group row">
+													<div class="col-md-12">
+														<div class="panel panel-default">
+															<div class="panel-heading">Added Invoice</div>
+															<div class="panel-body">
+																<div class="row" ng-repeat="p in invoices">
+																	<div class="col-md-2">{{p.cost}}dollars</div>
+																	<br>
+																	<div class="col-md-1"></div>
+																	<!-- "tab" over columns -->
+																	<div class="col-md-3">{{p.dueDate | date :
+																		'MM/dd/yyyy'}}</div>
+																	<div class="col-md-1">
+																		<button class="btn btn-danger btn-xs"
+																			ng-click="removeInvoice($index)"
+																			name="removeInvoice">
+																			<b>x</b>
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
 								<!-- Notes and Error Messages -->
 								<div class="row">
 									<div class="form-group col-md-6">
@@ -979,6 +1239,7 @@
 										</div>
 									</div>
 								</div>
+								
 							</div>
 							<!-- was form -->
 							<div class="panel-footer text-right">
