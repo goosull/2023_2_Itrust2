@@ -397,6 +397,7 @@ public class OfficeVisit extends DomainObject {
 
     public OphthalmologySurgeryInformation getOphthalmologySurgeryInformation () {
         return ophtSurgery;
+    }
     
     public void setInvoices ( final List<Invoice> invoices ) {
         this.invoices = invoices;
